@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/perlinBackgroundFragment">
+
+    <fragment
+        android:id="@+id/bouncingBallsFragment"
+        android:name="com.weesnerdevelopment.playingwithgames.random.bouncingBall.BallBounceFragment"
+        android:label="Ball Bounce" />
+    <fragment
+        android:id="@+id/gravityCirclesFragment"
+        android:name="com.weesnerdevelopment.playingwithgames.random.circlePhysics.CirclePhysicsFragment"
+        android:label="Circle Physics" />
+    <fragment
+        android:id="@+id/circleCollisionPhysicsFragment"
+        android:name="com.weesnerdevelopment.playingwithgames.random.circlePhysics.collision.CircleCollisionPhysicsFragment"
+        android:label="Circle Collision Physics" />
+    <fragment
+        android:id="@+id/walkerFragment"
+        android:name="com.weesnerdevelopment.playingwithgames.natureOfCode.randomWalker.WalkerFragment"
+        android:label="Walker" />
+    <fragment
+        android:id="@+id/perlinBackgroundFragment"
+        android:name="com.weesnerdevelopment.playingwithgames.natureOfCode.perlinBackground.PerlinBackgroundFragment"
+        android:label="Perlin Background" />
+</navigation>

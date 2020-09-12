@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bouncingBallsFragment"
+        android:title="Bouncing Balls" />
+    <item
+        android:id="@+id/gravityCirclesFragment"
+        android:title="Gravity Circles" />
+    <item
+        android:id="@+id/circleCollisionPhysicsFragment"
+        android:title="Gravity Collision Circles" />
+
+    <group
+        android:id="@+id/natureOfCode"
+        android:title="Nature of Code">
+        <item
+            android:id="@id/walkerFragment"
+            android:title="Random Walker" />
+        <item
+            android:id="@id/perlinBackgroundFragment"
+            android:title="Perlin Background" />
+    </group>
+</menu>
