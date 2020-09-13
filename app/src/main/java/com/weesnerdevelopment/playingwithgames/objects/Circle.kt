@@ -4,6 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import math.compareTo
+import math.minus
+import math.plus
 
 abstract class Circle(
     open var pos: Vector,
@@ -21,9 +24,9 @@ abstract class Circle(
     open fun draw(canvas: Canvas) {}
     abstract fun update(width: Number, height: Number)
 
-    fun reset() {
+    open fun reset() {
         pos = startPos
-        speed = startSpeed
+        velocity = startSpeed
     }
 
     fun Canvas.drawCircle() =
@@ -35,7 +38,21 @@ abstract class Circle(
         path.addCircle(pos.x.toFloat(), pos.y.toFloat(), radius.toFloat(), Path.Direction.CW)
     }
 
-    open fun adjustForInterpolation(interpolation: Number){
-        pos += Vector(interpolation, interpolation)
+    open fun adjustForInterpolation(interpolation: Number) {
+        pos + Vector(interpolation, interpolation)
+    }
+
+    open fun wrapEdges(width: Number, height: Number) {
+        pos.x = when {
+            pos.x - radius > width -> radius
+            pos.x + radius < 0 -> width - radius
+            else -> pos.x
+        }
+
+        pos.y = when {
+            pos.y - radius > height -> radius
+            pos.y + radius < 0 -> height - radius
+            else -> pos.y
+        }
     }
 }
