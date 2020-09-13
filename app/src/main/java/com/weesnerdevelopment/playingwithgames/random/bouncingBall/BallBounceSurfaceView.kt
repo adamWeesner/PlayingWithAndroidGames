@@ -7,14 +7,16 @@ import android.graphics.Paint
 import android.graphics.Path
 import com.weesnerdevelopment.playingwithgames.game.GameSurfaceView
 import com.weesnerdevelopment.playingwithgames.game.GameVariables
-import com.weesnerdevelopment.playingwithgames.random.PathInfo
+import com.weesnerdevelopment.playingwithgames.objects.Ball
+import com.weesnerdevelopment.playingwithgames.objects.PathInfo
 import kotlinx.coroutines.launch
+import java.lang.IllegalArgumentException
 import kotlin.random.Random.Default.nextInt
 
 class BallBounceSurfaceView(context: Context) : GameSurfaceView(context) {
     var balls: MutableList<Ball> = mutableListOf()
 
-    val randomColor
+    private val randomColor
         get() = Color.argb(
             nextInt(100, 255),
             nextInt(255),
@@ -51,10 +53,12 @@ class BallBounceSurfaceView(context: Context) : GameSurfaceView(context) {
                         ?: pathsData[nextInt(pathsData.size)]
                 }
 
-                ball.draw(ballPath.path, looper.interpolation)
+                ball.addToPath(ballPath.path)
             }
         } catch (e: ConcurrentModificationException) {
             println("Cannot modify from multiple places at the same time...")
+        } catch (e: IllegalArgumentException) {
+            println("Somehow an argument was illegal ${e.stackTrace}")
         }
         if (oldPathCount != pathsData.size) oldPathCount = pathsData.size
         drawing = false
@@ -70,7 +74,8 @@ class BallBounceSurfaceView(context: Context) : GameSurfaceView(context) {
         scope?.launch {
             drawing = true
             balls.forEach { ball ->
-                ball.updateOffset(screenWidth!!, screenHeight!!)
+                ball.update(screenWidth!!, screenHeight!!)
+                ball.adjustForInterpolation(looper.interpolation)
             }
             drawing = false
 

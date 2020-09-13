@@ -12,11 +12,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import math.Noise
 import math.map
+import math.plus
 
 class PerlinBackgroundSurfaceView(context: Context) : GameSurfaceView(context) {
     private var bitmap: Bitmap? = null
-    private var xOff: Double = 0.0
-    private var yOff: Double = 0.0
+    private var xOff: Number = 0
+    private var yOff: Number = 0
 
     override fun onResume() {
         super.onResume()

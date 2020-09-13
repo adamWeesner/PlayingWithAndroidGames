@@ -7,18 +7,15 @@ import android.graphics.Paint
 import android.graphics.Path
 import com.weesnerdevelopment.playingwithgames.game.GameSurfaceView
 import com.weesnerdevelopment.playingwithgames.game.GameVariables
+import com.weesnerdevelopment.playingwithgames.objects.PathInfo
+import com.weesnerdevelopment.playingwithgames.objects.PhysicsBall
 import kotlinx.coroutines.launch
 import kotlin.random.Random.Default.nextInt
 
-data class PathInfo(
-    val path: Path,
-    val paint: Paint
-)
-
 class CirclePhysicsSurfaceView(context: Context) : GameSurfaceView(context) {
-    var circles: List<Circle> = listOf()
+    var balls: List<PhysicsBall> = listOf()
 
-    val randomColor
+    private val randomColor
         get() = Color.argb(
             nextInt(150, 255),
             nextInt(255),
@@ -45,7 +42,7 @@ class CirclePhysicsSurfaceView(context: Context) : GameSurfaceView(context) {
 
         drawing = true
         try {
-            circles.forEach { circle ->
+            balls.forEach { circle ->
                 val path =
                     if (circle.path == null) pathsData[nextInt(pathsData.size)].path else circle.path!!
 
@@ -61,30 +58,31 @@ class CirclePhysicsSurfaceView(context: Context) : GameSurfaceView(context) {
             canvas.drawPath(it.path, it.paint)
         }
 
-        canvas.drawFPSInfo("Circles: ${circles.size}")
+        canvas.drawFPSInfo("Circles: ${balls.size}")
     }
 
     override fun onUpdate() {
         scope?.launch {
             drawing = true
-            circles.forEach { circle ->
-                circle.update(looper.interpolation)
+            balls.forEach { circle ->
+                circle.update(screenWidth!!, screenHeight!!)
+                circle.adjustForInterpolation(looper.interpolation)
                 circle.checkHitBottom(screenHeight!!)
             }
             drawing = false
-            circles = circles.filter { !it.hitBottom }
+            balls = balls.filter { !it.hitBottom }
         }
     }
 
     override fun onDestroy() {
-        circles = listOf()
+        balls = listOf()
         oldPathCount = 0
         pathsData = listOf()
     }
 
-    fun addCircle(circle: Circle) {
+    fun addCircle(ball: PhysicsBall) {
         scope?.launch {
-            if (!drawing) circles = circles + circle
+            if (!drawing) balls = balls + ball
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.weesnerdevelopment.playingwithgames.random
+package com.weesnerdevelopment.playingwithgames.objects
 
 import android.graphics.Paint
 import android.graphics.Path

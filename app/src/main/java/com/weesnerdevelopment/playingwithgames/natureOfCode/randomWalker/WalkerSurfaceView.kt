@@ -4,8 +4,9 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Path
-import android.graphics.PointF
 import com.weesnerdevelopment.playingwithgames.game.GameSurfaceView
+import com.weesnerdevelopment.playingwithgames.objects.Vector
+import com.weesnerdevelopment.playingwithgames.objects.Walker
 import kotlinx.coroutines.launch
 
 class WalkerSurfaceView(context: Context) : GameSurfaceView(context) {
@@ -15,7 +16,7 @@ class WalkerSurfaceView(context: Context) : GameSurfaceView(context) {
 
     override fun onResume() {
         super.onResume()
-        walker = Walker(PointF(measuredWidth.toFloat() / 2, measuredHeight.toFloat() / 2))
+        walker = Walker(Vector(measuredWidth.toFloat() / 2, measuredHeight.toFloat() / 2))
     }
 
     override fun onRender(canvas: Canvas) {

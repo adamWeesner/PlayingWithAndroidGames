@@ -1,8 +1,9 @@
 package com.weesnerdevelopment.playingwithgames.random.bouncingBall
 
-import android.graphics.PointF
 import com.weesnerdevelopment.playingwithgames.GameFragment
 import com.weesnerdevelopment.playingwithgames.game.GameVariables
+import com.weesnerdevelopment.playingwithgames.objects.Ball
+import com.weesnerdevelopment.playingwithgames.objects.Vector
 import kotlin.random.Random.Default.nextInt
 
 class BallBounceFragment : GameFragment() {
@@ -15,10 +16,8 @@ class BallBounceFragment : GameFragment() {
                 for (i in 0 until GameVariables.itemsPerClick.value)
                     addBall(
                         Ball(
-                            PointF(
-                                nextInt(measuredWidth).toFloat(),
-                                nextInt(measuredHeight).toFloat()
-                            )
+                            Vector(nextInt(measuredWidth), nextInt(measuredHeight)),
+                            Vector(nextInt(10), nextInt(10))
                         )
                     )
             }
