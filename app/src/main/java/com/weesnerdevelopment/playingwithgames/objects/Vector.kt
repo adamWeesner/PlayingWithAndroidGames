@@ -11,6 +11,13 @@ sealed class Vec {
     abstract operator fun times(scalar: Number): Vec
     abstract operator fun div(scalar: Number): Vec
 
+    abstract fun magnitude(): Number
+
+    open fun normalize() {
+        val mag = magnitude()
+        if (mag != 0) div(mag)
+    }
+
     open fun toAbs(): Vec = apply {
         x = x.absoluteValue
         y = y.absoluteValue
@@ -25,25 +32,27 @@ data class Vector(
         val zero = Vector(0, 0)
     }
 
-    override operator fun plus(other: Vec) = Vector(
-        x + other.x,
-        y + other.y
-    )
+    override operator fun plus(other: Vec) = apply {
+        x += other.x
+        y += other.y
+    }
 
-    override fun minus(other: Vec) = Vector(
-        x - other.x,
-        y - other.y
-    )
+    override fun minus(other: Vec) = apply {
+        x -= other.x
+        y -= other.y
+    }
 
-    override fun times(scalar: Number) = Vector(
-        x * scalar,
-        y * scalar
-    )
+    override fun times(scalar: Number) = apply {
+        x *= scalar
+        y *= scalar
+    }
 
-    override fun div(scalar: Number) = Vector(
-        x / scalar,
-        y / scalar
-    )
+    override fun div(scalar: Number) = apply {
+        x /= scalar
+        y /= scalar
+    }
+
+    override fun magnitude() = sqrt(x.pow(2) + y.pow(2))
 }
 
 data class Vector3D(
@@ -55,29 +64,31 @@ data class Vector3D(
         val zero = Vector3D(0, 0, 0)
     }
 
-    override operator fun plus(other: Vec) = Vector3D(
-        x + other.x,
-        y + other.y,
-        if (other is Vector3D) z + other.z else z
-    )
+    override operator fun plus(other: Vec) = apply {
+        x += other.x
+        y += other.y
+        if (other is Vector3D) z += other.z else z
+    }
 
-    override fun minus(other: Vec) = Vector3D(
-        x - other.x,
-        y - other.y,
-        if (other is Vector3D) z - other.z else z
-    )
+    override fun minus(other: Vec) = apply {
+        x -= other.x
+        y -= other.y
+        if (other is Vector3D) z -= other.z else z
+    }
 
-    override fun times(scalar: Number) = Vector3D(
-        x * scalar,
-        y * scalar,
-        x * scalar
-    )
+    override fun times(scalar: Number) = apply {
+        x *= scalar
+        y *= scalar
+        z *= scalar
+    }
 
-    override fun div(scalar: Number) = Vector3D(
-        x / scalar,
-        y / scalar,
-        x / scalar
-    )
+    override fun div(scalar: Number) = apply {
+        x /= scalar
+        y /= scalar
+        z /= scalar
+    }
+
+    override fun magnitude() = sqrt(x.pow(2) + y.pow(2) + z.pow(2))
 
     override fun toAbs(): Vector3D = super.toAbs().apply {
         z = z.absoluteValue
