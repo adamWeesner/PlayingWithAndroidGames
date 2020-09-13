@@ -259,7 +259,7 @@ operator fun Number.dec(): Number = when (this) {
 /**
  * Boolean whether the given [Number] is between the start and end range.
  */
-fun Number.between(start: Number = 0, end: Number) =
+fun Number.outsideOf(start: Number = 0, end: Number) =
     this >= end || this <= start
 
 /**
