@@ -1,7 +1,7 @@
 package math
 
-import android.graphics.PointF
-import kotlin.math.cos
+import com.weesnerdevelopment.playingwithgames.natureOfCode.objects.Vector
+import com.weesnerdevelopment.playingwithgames.natureOfCode.objects.Vector3D
 
 /**
  * Noise referenced from https://github.com/processing/p5.js/blob/1.1.9/src/math/noise.js#L36.
@@ -14,40 +14,39 @@ object Noise {
     private const val perlinSize = 4095
 
     private var perlinOctaves = 4 // default to medium smooth
-    private var perlinAmplitudeFalloff = 0.5f // 50% reduction/octave
+    private var perlinAmplitudeFalloff: Number = 0.5 // 50% reduction/octave
 
-    private val Float.scaledCosine: Float get() = (0.5 * (1.0 - cos(this * Math.PI))).toFloat()
-    private var perlin: Array<Float>? =
-        null // will be initialized lazily by noise() or noiseSeed()
+    private val Number.scaledCosine: Number get() = 0.5 * (1.0 - cos(this * Math.PI))
 
-    private fun perlinValue(of: Int, extra: Int = 0) =
+    // will be initialized lazily by [perlin]
+    private var perlin: Array<Number>? = null
+
+    private fun perlinValue(of: Number, extra: Number = 0) =
         perlin!![(of + extra).and(perlinSize)]
 
-    fun perlin(valueX: Int, valueY: Int = 0, valueZ: Int = 0) =
-        perlin(valueX.toFloat(), valueY.toFloat(), valueZ.toFloat())
-
-    fun perlin(valueX: Double, valueY: Double = 0.0, valueZ: Double = 0.0) =
-        perlin(valueX.toFloat(), valueY.toFloat(), valueZ.toFloat())
-
-    fun perlin(value: Float, valueY: Float, valueZ: Float): Float {
-        var r = 0f
-        var amplitude = 0.5f
-        val startPoint = PointF3D(value, valueY, valueZ).apply {
+    fun perlin(value: Number, valueY: Number = 0, valueZ: Number = 0): Number {
+        var r: Number = 0
+        var amplitude: Number = 0.5
+        val startPoint = Vector3D(value, valueY, valueZ).apply {
             toAbs()
         }
-        val startFloored = startPoint.toPoint3D()
-        val startMinusFloor = startPoint.minus(startFloored.asPointF3D())
+        val startFloored = Vector3D(
+            floor(startPoint.x),
+            floor(startPoint.y),
+            floor(startPoint.z)
+        )
+        val startMinusFloor = startPoint.minus(startFloored)
 
         if (perlin == null)
-            perlin = Array(perlinSize + 1) { Math.random().toFloat() }
+            perlin = Array(perlinSize + 1) { Math.random() }
 
 
         for (i in 0 until perlinOctaves) {
-            var of =
+            var of: Number =
                 startFloored.x + startFloored.y.shl(perlinYWrapB) + startFloored.z.shl(perlinZWrapB)
 
-            val pointF = PointF(startMinusFloor.x.scaledCosine, startMinusFloor.y.scaledCosine)
-            val point3DN = PointF3D(
+            val pointF = Vector(startMinusFloor.x.scaledCosine, startMinusFloor.y.scaledCosine)
+            val point3DN = Vector3D(
                 perlinValue(of),
                 perlinValue(of, perlinYWrap),
                 perlinValue(of, perlinYWrap)
@@ -72,7 +71,26 @@ object Noise {
             r += point3DN.x * amplitude
             amplitude *= perlinAmplitudeFalloff
 
-            startFloored.shift(startMinusFloor)
+            startFloored.x = startFloored.x.shl(1)
+            startMinusFloor.x *= 2
+            if (startMinusFloor.x >= 1) {
+                startFloored.x++
+                startMinusFloor.x--
+            }
+
+            startFloored.y = startFloored.y.shl(1)
+            startMinusFloor.y *= 2
+            if (startMinusFloor.y >= 1) {
+                startFloored.y++
+                startMinusFloor.y--
+            }
+
+            startFloored.z = startFloored.z.shl(1)
+            startMinusFloor.z *= 2
+            if (startMinusFloor.z >= 1) {
+                startFloored.z++
+                startMinusFloor.z--
+            }
         }
         return r
     }

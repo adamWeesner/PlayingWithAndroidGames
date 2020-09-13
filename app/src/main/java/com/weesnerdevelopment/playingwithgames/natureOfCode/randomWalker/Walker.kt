@@ -23,8 +23,8 @@ data class Walker(
         //pos.x += Random.nextInt(-speed, speed + 1)
         //pos.y += Random.nextInt(-speed, speed + 1)
 
-        pos.x = Noise.perlin(timeX, timeY).map(0, 1, 0, width)
-        pos.y = Noise.perlin(timeY).map(0, 1, 0, height)
+        pos.x = Noise.perlin(timeX, timeY).map(0, 1, 0, width) as Float
+        pos.y = Noise.perlin(timeY).map(0, 1, 0, height) as Float
         timeX += 0.01
         timeY += 0.01
     }

@@ -30,7 +30,7 @@ class PerlinBackgroundSurfaceView(context: Context) : GameSurfaceView(context) {
                         for (i in 0 until it.width) {
                             val r = Noise.perlin(xOff, yOff, i + j.toDouble()).map(0, 1, 0, 255)
                                 .map(0, 1, 0, 255)
-                            it[i, j] = Color.argb(r, r, r, r)
+                            it[i, j] = Color.argb(r.toFloat(), r.toFloat(), r.toFloat(), r.toFloat())
                             xOff += 0.01
                         }
                         yOff += 0.01
