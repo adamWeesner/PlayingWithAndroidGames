@@ -1,14 +1,16 @@
 package com.weesnerdevelopment.playingwithgames.game
 
+import math.*
+
 sealed class GameLooper {
-    var interpolation = 0f
+    var interpolation: Number = 0
         protected set
 
     abstract fun loop(update: () -> Unit, draw: () -> Unit)
 
-    protected fun trySleep(time: Long) {
+    protected fun trySleep(time: Number) {
         try {
-            Thread.sleep(time)
+            Thread.sleep(time.toLong())
         } catch (e: InterruptedException) {
             println("interruption happened trying to sleep")
         }
@@ -32,8 +34,8 @@ object GameLooperNoLimits : GameLooper() {
  * it can appear to be janky since the game speed can vary so much.
  */
 object GameLooperFPSDependentOnGameSpeed : GameLooper() {
-    private var nextFrame = Timer.now
-    private var sleepTime = 0L
+    private var nextFrame: Number = Timer.now
+    private var sleepTime: Number = 0
 
     override fun loop(update: () -> Unit, draw: () -> Unit) {
         update()
@@ -42,9 +44,8 @@ object GameLooperFPSDependentOnGameSpeed : GameLooper() {
         nextFrame += Timer.framePeriod
         sleepTime = nextFrame - Timer.now
 
-        if (sleepTime >= 0) {
+        if (sleepTime >= 0)
             trySleep(sleepTime)
-        }
     }
 }
 
@@ -53,8 +54,8 @@ object GameLooperFPSDependentOnGameSpeed : GameLooper() {
  * with the time difference of the previous frame.
  */
 object GameLooperGameSpeedDependentOnVariableFPS : GameLooper() {
-    private var previousFrame: Long = 0L
-    private var currentFrame = Timer.now
+    private var previousFrame: Number = 0
+    private var currentFrame: Number = Timer.now
 
     override fun loop(update: () -> Unit, draw: () -> Unit) {
         previousFrame = currentFrame
@@ -74,8 +75,8 @@ object GameLooperGameSpeedDependentOnVariableFPS : GameLooper() {
  * a lot of jank since it will have to work harder to maintain the FPS.
  */
 object GameLooperConstantGameSpeedWithMaxFps : GameLooper() {
-    private var nextFrame = Timer.now
-    private var loops = 0
+    private var nextFrame: Number = Timer.now
+    private var loops: Number = 0
 
     override fun loop(update: () -> Unit, draw: () -> Unit) {
         loops = 0
@@ -95,8 +96,8 @@ object GameLooperConstantGameSpeedWithMaxFps : GameLooper() {
  * difference to handle frame skip to help reduce jank and make things draw smoother.
  */
 object GameLooperConstantGameSpeedIndependentOfVariableFPS : GameLooper() {
-    private var nextFrame = Timer.now
-    private var loops = 0
+    private var nextFrame: Number = Timer.now
+    private var loops: Number = 0
 
     override fun loop(update: () -> Unit, draw: () -> Unit) {
         loops = 0
@@ -108,7 +109,7 @@ object GameLooperConstantGameSpeedIndependentOfVariableFPS : GameLooper() {
         }
 
         interpolation =
-            (Timer.now + Timer.maxFrameSkip - nextFrame).toFloat() / Timer.maxFrameSkip.toFloat()
+            (Timer.now + Timer.maxFrameSkip - nextFrame) / Timer.maxFrameSkip
 
         draw()
     }

@@ -1,7 +1,7 @@
 package com.weesnerdevelopment.playingwithgames
 
-import com.weesnerdevelopment.playingwithgames.natureOfCode.objects.Vector
-import com.weesnerdevelopment.playingwithgames.natureOfCode.objects.Vector3D
+import com.weesnerdevelopment.playingwithgames.objects.Vector
+import com.weesnerdevelopment.playingwithgames.objects.Vector3D
 import org.junit.Assert
 import org.junit.Test
 

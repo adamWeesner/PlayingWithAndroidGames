@@ -183,7 +183,7 @@ class NumberTests {
         val second: Number = 2.3
         val third: Number = 3.5f
 
-        Assert.assertEquals(first + second + third, 6.8 as Number)
+        Assert.assertEquals(first + second + third, 6.8)
     }
 
     @Test
@@ -192,6 +192,6 @@ class NumberTests {
         val second: Number = 2
         val third: Number = 3
 
-        Assert.assertEquals(first + second + third, 6 as Number)
+        Assert.assertEquals(first + second + third, 6)
     }
 }

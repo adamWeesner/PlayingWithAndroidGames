@@ -35,7 +35,7 @@ abstract class GameFragment : Fragment() {
         super.onStart()
         foregroundScope = MainScope()
 
-        findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
+        findNavController().addOnDestinationChangedListener { _, _, _ ->
             gameView.destroy()
         }
 
