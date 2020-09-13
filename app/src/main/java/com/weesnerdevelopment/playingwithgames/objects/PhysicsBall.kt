@@ -5,18 +5,17 @@ import math.*
 data class PhysicsBall(
     override var pos: Vector,
     override val radius: Number,
-    val gravity: Number = radius * 0.01,
-    var velocity: Number = 1,
-    override var speed: Vector = Vector.zero
-) : Circle(pos, speed, radius) {
+    val gravity: Vector = Vector(0, radius * 0.01),
+    override var velocity: Vector = Vector.zero
+) : Circle(pos, velocity, radius) {
     var hitBottom = false
     var collided = false
 
     override fun update(width: Number, height: Number) {
-        if (hitBottom) velocity = 0f
-        else velocity += gravity
+        if (hitBottom) velocity.y = 0
+        else velocity + gravity
 
-        pos.y += velocity
+        pos + velocity
     }
 
     override fun adjustForInterpolation(interpolation: Number) {

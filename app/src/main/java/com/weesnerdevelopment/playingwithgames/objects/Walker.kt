@@ -7,9 +7,9 @@ import math.plus
 
 data class Walker(
     override var pos: Vector,
-    override var speed: Vector = Vector(5,5),
+    override var velocity: Vector = Vector(5,5),
     override val radius: Number = 20
-): Circle(pos, speed, radius) {
+): Circle(pos, velocity, radius) {
     override var paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.BLACK
     }

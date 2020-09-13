@@ -7,11 +7,11 @@ import android.graphics.Path
 
 abstract class Circle(
     open var pos: Vector,
-    open var speed: Vector,
+    open var velocity: Vector,
     open val radius: Number = 50
 ) {
     private val startPos by lazy { pos }
-    private val startSpeed by lazy { speed }
+    private val startSpeed by lazy { velocity }
     var path: Path? = null
 
     open val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
