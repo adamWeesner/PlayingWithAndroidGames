@@ -1,14 +1,12 @@
 package com.weesnerdevelopment.playingwithgames.game
 
 import android.os.SystemClock
-import math.minus
-import math.plus
-import math.times
+import math.*
 
 object Timer {
-    val maxFps = 60
-    val framePeriod = 1000 / maxFps
-    val maxFrameSkip = 10
+    val maxFps: Number = 60
+    val framePeriod: Number = 1000 / maxFps
+    val maxFrameSkip: Number = 10
 
     val now get() = System.currentTimeMillis()
 
@@ -21,10 +19,12 @@ object Timer {
         started = now
     }
 
-    fun calcFrameTime() = SystemClock.elapsedRealtime() - startedAt
+    private fun calcFrameTime() = (SystemClock.elapsedRealtime() - startedAt).absoluteValue
 
-    fun calcFps() =
-        maxFps / if (calcFrameTime() == 0L) 1 else calcFrameTime()
+    fun calcFps(): Number {
+        val frameTime = calcFrameTime()
+        return maxFps / if (frameTime == 0L) 1 else frameTime
+    }
 
     fun calcAvgFps(): Number {
         avgFps += (calcFps() - avgFps) * 0.03
