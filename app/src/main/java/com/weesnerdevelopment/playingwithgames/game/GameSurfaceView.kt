@@ -22,11 +22,11 @@ abstract class GameSurfaceView : SurfaceView, Runnable {
     protected var scope: CoroutineScope? = null
     protected var screenWidth: Int? = null
     protected var screenHeight: Int? = null
-    protected val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 60f
         color = Color.BLACK
     }
-    protected val textBackgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private val textBackgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
         alpha = 200
     }
@@ -78,14 +78,15 @@ abstract class GameSurfaceView : SurfaceView, Runnable {
 
                     if (canvas != null) {
                         render(canvas)
-                        surfaceHolder.unlockCanvasAndPost(canvas)
+                        if (surfaceHolder.surface.isValid)
+                            surfaceHolder.unlockCanvasAndPost(canvas)
                     }
                 }
             )
         }
     }
 
-    protected fun Canvas.drawFPSInfo(countLabel: String){
+    protected fun Canvas.drawFPSInfo(countLabel: String) {
         val avgFpsString = "Avg Fps: ${NumberFormat.getInstance().format(Timer.calcAvgFps())}"
         drawRect(0f, 0f, avgFpsString.length * 30f + 20f, 200f, textBackgroundPaint)
         text("Fps: ${NumberFormat.getInstance().format(Timer.calcFps())}", 60f)
@@ -126,9 +127,9 @@ abstract class GameSurfaceView : SurfaceView, Runnable {
     }
 
     fun pause() {
+        isRunning = false
         scope?.cancel()
         scope = null
-        isRunning = false
         var retry = true
 
         while (retry) {
@@ -149,9 +150,9 @@ abstract class GameSurfaceView : SurfaceView, Runnable {
     }
 
     fun clear() {
+        isRunning = false
         scope?.cancel()
         scope = null
-        isRunning = false
         gameThread?.interrupt()
         gameThread = null
         onClear()

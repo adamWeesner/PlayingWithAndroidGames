@@ -1,19 +1,19 @@
 package math
 
-import com.weesnerdevelopment.playingwithgames.natureOfCode.objects.Vector
-import com.weesnerdevelopment.playingwithgames.natureOfCode.objects.Vector3D
+import com.weesnerdevelopment.playingwithgames.objects.Vector
+import com.weesnerdevelopment.playingwithgames.objects.Vector3D
 
 /**
  * Noise referenced from https://github.com/processing/p5.js/blob/1.1.9/src/math/noise.js#L36.
  */
 object Noise {
-    private const val perlinYWrapB = 4
-    private const val perlinYWrap = 1.shl(perlinYWrapB)
-    private const val perlinZWrapB = 8
-    private const val perlinZWrap = 1.shl(perlinZWrapB)
-    private const val perlinSize = 4095
+    private val perlinYWrapB: Number = 4
+    private val perlinYWrap: Number = 1.shl(perlinYWrapB)
+    private val perlinZWrapB: Number = 8
+    private val perlinZWrap: Number = 1.shl(perlinZWrapB)
+    private val perlinSize: Number = 4095
 
-    private var perlinOctaves = 4 // default to medium smooth
+    private var perlinOctaves: Number = 4 // default to medium smooth
     private var perlinAmplitudeFalloff: Number = 0.5 // 50% reduction/octave
 
     private val Number.scaledCosine: Number get() = 0.5 * (1.0 - cos(this * Math.PI))
@@ -21,7 +21,7 @@ object Noise {
     // will be initialized lazily by [perlin]
     private var perlin: Array<Number>? = null
 
-    private fun perlinValue(of: Number, extra: Number = 0) =
+    private fun perlinValue(of: Number, extra: Number = 0): Number =
         perlin!![(of + extra).and(perlinSize)]
 
     fun perlin(value: Number, valueY: Number = 0, valueZ: Number = 0): Number {
@@ -31,17 +31,17 @@ object Noise {
             toAbs()
         }
         val startFloored = Vector3D(
-            floor(startPoint.x),
-            floor(startPoint.y),
-            floor(startPoint.z)
+            floor(startPoint.x).toInt(),
+            floor(startPoint.y).toInt(),
+            floor(startPoint.z).toInt()
         )
         val startMinusFloor = startPoint.minus(startFloored)
 
         if (perlin == null)
-            perlin = Array(perlinSize + 1) { Math.random() }
+            perlin = Array((perlinSize + 1).toInt()) { Math.random() }
 
 
-        for (i in 0 until perlinOctaves) {
+        for (i in 0 until perlinOctaves.toInt()) {
             var of: Number =
                 startFloored.x + startFloored.y.shl(perlinYWrapB) + startFloored.z.shl(perlinZWrapB)
 

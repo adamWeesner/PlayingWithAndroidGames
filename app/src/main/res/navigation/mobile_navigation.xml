@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/perlinBackgroundFragment">
+    app:startDestination="@id/bouncingBallFragment">
 
     <fragment
         android:id="@+id/bouncingBallsFragment"
@@ -24,4 +24,8 @@
         android:id="@+id/perlinBackgroundFragment"
         android:name="com.weesnerdevelopment.playingwithgames.natureOfCode.perlinBackground.PerlinBackgroundFragment"
         android:label="Perlin Background" />
+    <fragment
+        android:id="@+id/bouncingBallFragment"
+        android:name="com.weesnerdevelopment.playingwithgames.natureOfCode.bouncingBall.BouncingBallFragment"
+        android:label="Bouncing Ball" />
 </navigation>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/bouncingBallsFragment"
+        android:id="@id/bouncingBallsFragment"
         android:title="Bouncing Balls" />
     <item
-        android:id="@+id/gravityCirclesFragment"
+        android:id="@id/gravityCirclesFragment"
         android:title="Gravity Circles" />
     <item
-        android:id="@+id/circleCollisionPhysicsFragment"
+        android:id="@id/circleCollisionPhysicsFragment"
         android:title="Gravity Collision Circles" />
 
     <group
@@ -19,5 +19,8 @@
         <item
             android:id="@id/perlinBackgroundFragment"
             android:title="Perlin Background" />
+        <item
+            android:id="@id/bouncingBallFragment"
+            android:title="Bouncing Ball" />
     </group>
 </menu>
