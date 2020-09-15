@@ -18,7 +18,7 @@ abstract class Circle(
     var path: Path? = null
 
     open val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.rgb(100, 100, 100)
+        color = Color.argb(100, 100, 100, 100)
     }
 
     open fun draw(canvas: Canvas) {}

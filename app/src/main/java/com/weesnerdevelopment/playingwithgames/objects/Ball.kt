@@ -10,7 +10,7 @@ data class Ball(
     override var velocity: Vector,
     val acceleration: Vector = Vector(-0.001, 0.01),
     override val radius: Number = 50,
-    val topSpeed: Number = 100
+    val topSpeed: Number = 10
 ) : Circle(pos, velocity, radius) {
     override fun draw(canvas: Canvas) {
         canvas.drawCircle()
@@ -22,11 +22,15 @@ data class Ball(
         if (pos.x.outsideOf(radius, width - radius)) velocity.x *= -1
         if (pos.y.outsideOf(radius, height - radius)) velocity.y *= -1
 
-        pos += velocity
+        pos + velocity
     }
 
     fun updatePos() {
-        velocity + acceleration
+        updateTowardPoint(acceleration)
+    }
+
+    fun updateTowardPoint(point: Vector){
+        velocity + point
         velocity.limit(topSpeed)
         pos + velocity
     }

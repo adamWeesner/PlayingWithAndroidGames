@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/bouncingBallFragment">
+    app:startDestination="@id/ballFollowTouchFragment">
 
     <fragment
         android:id="@+id/bouncingBallsFragment"
@@ -28,4 +28,8 @@
         android:id="@+id/bouncingBallFragment"
         android:name="com.weesnerdevelopment.playingwithgames.natureOfCode.bouncingBall.BouncingBallFragment"
         android:label="Bouncing Ball" />
+    <fragment
+        android:id="@+id/ballFollowTouchFragment"
+        android:name="com.weesnerdevelopment.playingwithgames.natureOfCode.ballFollowTouch.BallFollowTouchFragment"
+        android:label="Ball Follow Touch" />
 </navigation>

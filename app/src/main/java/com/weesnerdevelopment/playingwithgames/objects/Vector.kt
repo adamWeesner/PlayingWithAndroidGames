@@ -1,6 +1,7 @@
 package com.weesnerdevelopment.playingwithgames.objects
 
 import math.*
+import kotlin.random.Random.Default.nextInt
 
 sealed class Vec {
     open lateinit var x: Number
@@ -41,6 +42,7 @@ data class Vector(
 ) : Vec() {
     companion object {
         val zero = Vector(0, 0)
+        val random get() = Vector(nextInt(1000), nextInt(1000))
 
         fun add(first: Vector, second: Vector) = Vector(
             first.x + second.x,
