@@ -7,14 +7,13 @@ import android.graphics.Path
 import math.compareTo
 import math.minus
 import math.plus
+import math.times
 
 abstract class Circle(
     open var pos: Vector,
     open var velocity: Vector,
     open val radius: Number = 50
 ) {
-    private val startPos by lazy { pos }
-    private val startSpeed by lazy { velocity }
     var path: Path? = null
 
     open val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -25,8 +24,8 @@ abstract class Circle(
     abstract fun update(width: Number, height: Number)
 
     open fun reset() {
-        pos = startPos
-        velocity = startSpeed
+        pos = Vector.random
+        velocity = Vector.zero
     }
 
     fun Canvas.drawCircle() =
@@ -42,6 +41,9 @@ abstract class Circle(
         pos + Vector(interpolation, interpolation)
     }
 
+    /**
+     * Checks for the edges and wraps around to the other side.
+     */
     open fun wrapEdges(width: Number, height: Number) {
         pos.x = when {
             pos.x - radius > width -> radius
@@ -53,6 +55,27 @@ abstract class Circle(
             pos.y - radius > height -> radius
             pos.y + radius < 0 -> height - radius
             else -> pos.y
+        }
+    }
+
+    /**
+     * Checks and "bounces" off the edge.
+     */
+    open fun checkEdges(width: Number, height: Number){
+        when {
+            pos.x > width - radius -> {
+                pos.x = width - radius
+                velocity.x *= -1
+            }
+            pos.x < 0 + radius -> {
+                pos.x = radius
+                velocity.x *= -1
+            }
+        }
+
+        if(pos.y > height - radius){
+            velocity.y *= -1
+            pos.y = height - radius
         }
     }
 }

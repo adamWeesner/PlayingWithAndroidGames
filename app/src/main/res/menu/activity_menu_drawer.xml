@@ -25,5 +25,8 @@
         <item
             android:id="@id/ballFollowTouchFragment"
             android:title="Ball Follow Touch" />
+         <item
+            android:id="@id/ballWithForcesFragment"
+            android:title="Ball With Forces" />
     </group>
 </menu>

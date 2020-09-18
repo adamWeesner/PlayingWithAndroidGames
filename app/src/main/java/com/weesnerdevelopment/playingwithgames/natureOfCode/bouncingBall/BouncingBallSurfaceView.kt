@@ -19,6 +19,7 @@ class BouncingBallSurfaceView(context: Context) : GameSurfaceView(context) {
 
     override fun onUpdate() {
         super.onUpdate()
+        ball.updatePos()
         ball.updateWrap(screenWidth!!, screenHeight!!)
     }
 
