@@ -4,7 +4,7 @@ import android.os.SystemClock
 import math.*
 
 object Timer {
-    val maxFps: Number = 60
+    val maxFps: Number = 120
     val framePeriod: Number = 1000 / maxFps
     val maxFrameSkip: Number = 10
 

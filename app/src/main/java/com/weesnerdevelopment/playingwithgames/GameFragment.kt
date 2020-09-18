@@ -1,6 +1,5 @@
 package com.weesnerdevelopment.playingwithgames
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,38 +7,42 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.weesnerdevelopment.playingwithgames.game.GameSurfaceView
 import com.weesnerdevelopment.playingwithgames.game.GameVariables
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
+import kotlinx.android.synthetic.main.fragment_game.*
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 abstract class GameFragment : Fragment() {
     lateinit var gameView: GameSurfaceView
-    lateinit var foregroundScope: CoroutineScope
+    private var foregroundScope: CoroutineScope? = null
 
     private var oldColorCount = GameVariables.pathColorCount.value
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        create()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = gameView
+    ) = inflater.inflate(R.layout.fragment_game, container, false)
 
     override fun onStart() {
         super.onStart()
-        foregroundScope = MainScope()
+
+        create()
 
         findNavController().addOnDestinationChangedListener { _, _, _ ->
             gameView.destroy()
         }
+    }
 
-        foregroundScope.launch {
+    override fun onResume() {
+        super.onResume()
+        foregroundScope = MainScope()
+
+        layout_game.removeAllViews()
+        layout_game.addView(gameView)
+
+        gameView.resume()
+
+        foregroundScope?.launch {
             GameVariables.pathColorCount.flow.collect {
                 if (oldColorCount != it) {
                     oldColorCount = it
@@ -49,7 +52,7 @@ abstract class GameFragment : Fragment() {
             }
         }
 
-        foregroundScope.launch {
+        foregroundScope?.launch {
             GameVariables.resetGame.flow.collect {
                 if (it) {
                     gameView.destroy()
@@ -58,7 +61,7 @@ abstract class GameFragment : Fragment() {
             }
         }
 
-        foregroundScope.launch {
+        foregroundScope?.launch {
             GameVariables.looper.flow.collect {
                 gameView.destroy()
                 gameView.loopType = it
@@ -67,19 +70,11 @@ abstract class GameFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        gameView.resume()
-    }
-
     override fun onPause() {
         gameView.pause()
+        foregroundScope?.cancel()
+        foregroundScope = null
         super.onPause()
-    }
-
-    override fun onStop() {
-        foregroundScope.cancel()
-        super.onStop()
     }
 
     abstract fun create()

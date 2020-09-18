@@ -3,27 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_add_per_click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:minWidth="100dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:minWidth="80dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Add Per Tap"
+                android:hint="Add"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -31,8 +31,8 @@
             android:id="@+id/til_colors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:minWidth="100dp"
+            android:layout_marginStart="4dp"
+            android:minWidth="80dp"
             app:layout_constraintStart_toEndOf="@id/til_add_per_click"
             app:layout_constraintTop_toTopOf="@id/til_add_per_click">
 
@@ -45,23 +45,24 @@
 
         <Spinner
             android:id="@+id/spinner_looper"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
             android:entries="@array/looper_types"
             app:layout_constraintBottom_toBottomOf="@id/til_add_per_click"
+            app:layout_constraintEnd_toStartOf="@+id/button_clear"
             app:layout_constraintStart_toEndOf="@id/til_colors"
             app:layout_constraintTop_toTopOf="@id/til_add_per_click" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_clear"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:text="Reset"
             app:layout_constraintBottom_toBottomOf="@id/til_add_per_click"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@id/spinner_looper"
             app:layout_constraintTop_toTopOf="@id/til_add_per_click" />
 
         <fragment
@@ -79,7 +80,6 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        android:elevation="10dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
