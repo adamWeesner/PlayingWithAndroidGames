@@ -14,8 +14,8 @@ class WalkerSurfaceView(context: Context) : GameSurfaceView(context) {
 
     private var path: Path = Path()
 
-    override fun onResume() {
-        super.onResume()
+    override fun resume() {
+        super.resume()
         walker = Walker(Vector(measuredWidth.toFloat() / 2, measuredHeight.toFloat() / 2))
     }
 
@@ -24,7 +24,7 @@ class WalkerSurfaceView(context: Context) : GameSurfaceView(context) {
 
         walker.draw(canvas)
         walker.drawTrail(path, canvas)
-        //canvas.drawFPSInfo("")
+        canvas.drawFPSInfo("")
 
     }
 

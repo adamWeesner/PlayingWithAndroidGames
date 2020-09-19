@@ -13,7 +13,7 @@ class CircleCollisionPhysicsFragment : GameFragment() {
             loopType = GameVariables.looper.value
 
             setOnClickListener {
-                for (i in 0 until GameVariables.itemsPerClick.value)
+                for (i in 0 until GameVariables.itemsPerClick.value.toInt())
                     addCircle(
                         PhysicsBall(
                             Vector(nextInt(measuredWidth), nextInt(measuredHeight)),

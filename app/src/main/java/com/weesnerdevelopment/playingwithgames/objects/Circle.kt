@@ -10,7 +10,9 @@ import math.plus
 import math.times
 
 abstract class Circle(
+    @Volatile
     open var pos: Vector,
+    @Volatile
     open var velocity: Vector,
     open val radius: Number = 50
 ) {

@@ -26,7 +26,8 @@ class BallWithForcesSurfaceView(context: Context) : GameSurfaceView(context) {
         canvas.drawFPSInfo("")
     }
 
-    override fun onClear() {
+    override fun clear() {
+        super.clear()
         ball.reset()
     }
 }

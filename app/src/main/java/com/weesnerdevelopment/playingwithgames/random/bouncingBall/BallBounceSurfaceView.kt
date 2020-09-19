@@ -30,7 +30,8 @@ class BallBounceSurfaceView(context: Context) : GameSurfaceView(context) {
 
     private fun resetPaths() = pathsData.forEach { it.path.reset() }
 
-    override fun onResume() {
+    override fun resume() {
+        super.resume()
         pathsData = (0 until GameVariables.pathColorCount.value).map {
             PathInfo(Path(), Paint(Paint.ANTI_ALIAS_FLAG).apply { color = randomColor })
         }
@@ -82,7 +83,8 @@ class BallBounceSurfaceView(context: Context) : GameSurfaceView(context) {
         }
     }
 
-    override fun onDestroy() {
+    override fun clear() {
+        super.clear()
         balls = mutableListOf()
         oldPathCount = 0
         pathsData = listOf()

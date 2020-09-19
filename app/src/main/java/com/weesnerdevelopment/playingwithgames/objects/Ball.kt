@@ -8,7 +8,8 @@ import math.times
 data class Ball(
     override var pos: Vector,
     override var velocity: Vector,
-    val acceleration: Vector = Vector(-0.001, 0.01),
+    @Volatile
+    var acceleration: Vector = Vector(-0.001, 0.01),
     override val radius: Number = 50,
     val topSpeed: Number = 10
 ) : Circle(pos, velocity, radius) {

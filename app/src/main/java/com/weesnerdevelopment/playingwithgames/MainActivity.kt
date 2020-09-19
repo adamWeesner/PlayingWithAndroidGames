@@ -1,72 +1,51 @@
 package com.weesnerdevelopment.playingwithgames
 
+import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.weesnerdevelopment.playingwithgames.game.GameLoopType
-import com.weesnerdevelopment.playingwithgames.game.GameVariables
-import kotlinx.android.synthetic.main.activity_main.*
+import com.weesnerdevelopment.playingwithgames.game.StateVariables
+import com.weesnerdevelopment.playingwithgames.natureOfCode.ballFollowTouch.BallFollowTouchFragment
+import com.weesnerdevelopment.playingwithgames.natureOfCode.ballWithForces.BallWithForcesFragment
+import com.weesnerdevelopment.playingwithgames.natureOfCode.bouncingBall.BouncingBallFragment
+import com.weesnerdevelopment.playingwithgames.natureOfCode.perlinBackground.PerlinBackgroundFragment
+import com.weesnerdevelopment.playingwithgames.natureOfCode.randomWalker.WalkerFragment
+import com.weesnerdevelopment.playingwithgames.random.bouncingBall.BallBounceFragment
+import com.weesnerdevelopment.playingwithgames.random.circlePhysics.CirclePhysicsFragment
+import com.weesnerdevelopment.playingwithgames.random.circlePhysics.collision.CircleCollisionPhysicsFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var navController: NavController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navController = findNavController(R.id.nav_host_fragment)
-
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawer_layout)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        nav_view.setupWithNavController(navController)
-
-        til_add_per_click.editText?.apply {
-            setText(GameVariables.itemsPerClick.value.toString())
-            addTextChangedListener {
-                if (it?.isEmpty() == true || it.toString() == "0")
-                    GameVariables.itemsPerClick.value = 100
-                else
-                    GameVariables.itemsPerClick.value = it.toString().toInt()
-            }
+        val listSize = resources.getStringArray(R.array.fragments).size - 1
+        fragments(resources, listSize)?.let {
+            println("fragment $it, ${it::class.simpleName}")
+            StateVariables.currentFragment.value = listSize
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_layout, it, it::class.simpleName)
+                .commit()
         }
 
-        til_colors.editText?.apply {
-            setText(GameVariables.pathColorCount.value.toString())
-            addTextChangedListener {
-                if (it?.isEmpty() == true || it.toString() == "0")
-                    GameVariables.pathColorCount.value = 1
-                else
-                    GameVariables.pathColorCount.value = it.toString().toInt()
-            }
-        }
-
-        val loopers = resources.getStringArray(R.array.looper_types)
-
-        spinner_looper.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, pos: Int, p3: Long) {
-                GameVariables.looper.value =
-                    GameLoopType.values().first { it.value == loopers[pos] }
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-
-        }
-
-        button_clear.setOnClickListener {
-            GameVariables.resetGame.value = true
-        }
     }
+}
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+fun Context.fragments(resources: Resources, selection: Int): GameFragment? {
+    val fragments = resources.getStringArray(R.array.fragments)
+
+    return when (fragments[selection]) {
+        // random
+        getString(R.string.bouncing_balls) -> BallBounceFragment()
+        getString(R.string.gravity_circles) -> CirclePhysicsFragment()
+        getString(R.string.gravity_collision_circles) -> CircleCollisionPhysicsFragment()
+        // nature of code
+        getString(R.string.random_walker) -> WalkerFragment()
+        getString(R.string.perlin_background) -> PerlinBackgroundFragment()
+        getString(R.string.bouncing_ball) -> BouncingBallFragment()
+        getString(R.string.ball_follow_touch) -> BallFollowTouchFragment()
+        getString(R.string.ball_with_forces) -> BallWithForcesFragment()
+        else -> null
     }
 }

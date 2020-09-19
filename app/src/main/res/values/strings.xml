@@ -1,10 +1,30 @@
 <resources>
     <string name="app_name">Playing With Games</string>
+    <string name="bouncing_balls">Bouncing Balls</string>
+    <string name="gravity_circles">Gravity Circles</string>
+    <string name="gravity_collision_circles">Gravity Collision Circles</string>
+    <string name="random_walker">Random Walker</string>
+    <string name="perlin_background">Perlin Background</string>
+    <string name="bouncing_ball">Bouncing Ball</string>
+    <string name="ball_follow_touch">Ball Follow Touch</string>
+    <string name="ball_with_forces">Ball with Forces</string>
     <string-array name="looper_types">
         <item>Game FPS</item>
         <item>Max FPS</item>
         <item>Vary FPS</item>
         <item>Game Speed</item>
         <item>Unlimited</item>
+    </string-array>
+    <string-array name="fragments">
+        <item>-- Random --</item>
+        <item>@string/bouncing_balls</item>
+        <item>@string/gravity_circles</item>
+        <item>@string/gravity_collision_circles</item>
+        <item>-- Nature of Code --</item>
+        <item>@string/random_walker</item>
+        <item>@string/perlin_background</item>
+        <item>@string/bouncing_ball</item>
+        <item>@string/ball_follow_touch</item>
+        <item>@string/ball_with_forces</item>
     </string-array>
 </resources>

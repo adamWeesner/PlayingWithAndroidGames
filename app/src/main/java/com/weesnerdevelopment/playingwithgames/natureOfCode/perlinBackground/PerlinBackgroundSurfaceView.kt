@@ -19,8 +19,8 @@ class PerlinBackgroundSurfaceView(context: Context) : GameSurfaceView(context) {
     private var xOff: Number = 0
     private var yOff: Number = 0
 
-    override fun onResume() {
-        super.onResume()
+    override fun resume() {
+        super.resume()
         scope?.launch {
             withContext(Dispatchers.IO) {
                 if (bitmap == null)
@@ -53,7 +53,8 @@ class PerlinBackgroundSurfaceView(context: Context) : GameSurfaceView(context) {
         canvas.drawFPSInfo("")
     }
 
-    override fun onClear() {
+    override fun clear() {
+        super.clear()
         bitmap = null
     }
 }

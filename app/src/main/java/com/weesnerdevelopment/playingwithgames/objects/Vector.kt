@@ -41,7 +41,7 @@ data class Vector(
     override var y: Number
 ) : Vec() {
     companion object {
-        val zero = Vector(0, 0)
+        val zero get() = Vector(0, 0)
         val random get() = Vector(nextInt(1000), nextInt(1000))
 
         fun add(first: Vector, second: Vector) = Vector(

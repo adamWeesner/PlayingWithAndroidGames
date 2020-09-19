@@ -23,7 +23,8 @@ class BouncingBallSurfaceView(context: Context) : GameSurfaceView(context) {
         ball.updateWrap(screenWidth!!, screenHeight!!)
     }
 
-    override fun onClear() {
+    override fun clear() {
+        super.clear()
         ball.reset()
     }
 }

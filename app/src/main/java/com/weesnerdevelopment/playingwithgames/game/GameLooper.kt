@@ -6,7 +6,7 @@ sealed class GameLooper {
     var interpolation: Number = 0
         protected set
 
-    abstract fun loop(update: () -> Unit, draw: () -> Unit)
+    abstract suspend fun loop(update: () -> Unit, draw: suspend () -> Unit)
 
     protected fun trySleep(time: Number) {
         try {
@@ -23,7 +23,7 @@ sealed class GameLooper {
  * cannot keep up with the game loop.
  */
 object GameLooperNoLimits : GameLooper() {
-    override fun loop(update: () -> Unit, draw: () -> Unit) {
+    override suspend fun loop(update: () -> Unit, draw: suspend () -> Unit) {
         update()
         draw()
     }
@@ -37,7 +37,7 @@ object GameLooperFPSDependentOnGameSpeed : GameLooper() {
     private var nextFrame: Number = Timer.now
     private var sleepTime: Number = 0
 
-    override fun loop(update: () -> Unit, draw: () -> Unit) {
+    override suspend fun loop(update: () -> Unit, draw: suspend () -> Unit) {
         update()
         draw()
 
@@ -57,7 +57,7 @@ object GameLooperGameSpeedDependentOnVariableFPS : GameLooper() {
     private var previousFrame: Number = 0
     private var currentFrame: Number = Timer.now
 
-    override fun loop(update: () -> Unit, draw: () -> Unit) {
+    override suspend fun loop(update: () -> Unit, draw: suspend () -> Unit) {
         previousFrame = currentFrame
         currentFrame = Timer.now
 
@@ -78,7 +78,7 @@ object GameLooperConstantGameSpeedWithMaxFps : GameLooper() {
     private var nextFrame: Number = Timer.now
     private var loops: Number = 0
 
-    override fun loop(update: () -> Unit, draw: () -> Unit) {
+    override suspend fun loop(update: () -> Unit, draw: suspend () -> Unit) {
         loops = 0
         while (Timer.now > nextFrame && loops < Timer.maxFrameSkip) {
             update()
@@ -99,7 +99,7 @@ object GameLooperConstantGameSpeedIndependentOfVariableFPS : GameLooper() {
     private var nextFrame: Number = Timer.now
     private var loops: Number = 0
 
-    override fun loop(update: () -> Unit, draw: () -> Unit) {
+    override suspend fun loop(update: () -> Unit, draw: suspend () -> Unit) {
         loops = 0
         while (Timer.now > nextFrame && loops < Timer.maxFrameSkip) {
             update()

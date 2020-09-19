@@ -29,8 +29,9 @@ class CirclePhysicsSurfaceView(context: Context) : GameSurfaceView(context) {
 
     private fun resetPaths() = pathsData.forEach { it.path.reset() }
 
-    override fun onResume() {
-        pathsData = (0 until GameVariables.pathColorCount.value).map {
+    override fun resume() {
+        super.resume()
+        pathsData = (0 until GameVariables.pathColorCount.value.toInt()).map {
             PathInfo(Path(), Paint(Paint.ANTI_ALIAS_FLAG).apply { color = randomColor })
         }
     }
@@ -74,7 +75,8 @@ class CirclePhysicsSurfaceView(context: Context) : GameSurfaceView(context) {
         }
     }
 
-    override fun onDestroy() {
+    override fun clear() {
+        super.clear()
         balls = listOf()
         oldPathCount = 0
         pathsData = listOf()

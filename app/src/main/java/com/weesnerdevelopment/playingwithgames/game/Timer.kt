@@ -4,14 +4,17 @@ import android.os.SystemClock
 import math.*
 
 object Timer {
-    val maxFps: Number = 120
+    val maxFps: Number get() = GameVariables.fps.value
     val framePeriod: Number = 1000 / maxFps
     val maxFrameSkip: Number = 10
 
     val now get() = System.currentTimeMillis()
 
+    @Volatile
     var startedAt = SystemClock.elapsedRealtime()
+    @Volatile
     var started: Number = 0
+    @Volatile
     var avgFps: Number = 0
 
     fun start() {
