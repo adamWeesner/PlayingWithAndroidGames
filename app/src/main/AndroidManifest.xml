@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.weesnerdevelopment.playingwithgames">
 
+    <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="true"/>
+    <uses-feature android:glEsVersion="0x00010000" android:required="true"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayingWithGames">
         <activity
-            android:name=".MainActivity"
+            android:name=".buildingAndroidGames.mrNom.MrNomGame"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
