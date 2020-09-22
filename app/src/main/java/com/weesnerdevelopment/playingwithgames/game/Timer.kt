@@ -1,7 +1,7 @@
 package com.weesnerdevelopment.playingwithgames.game
 
 import android.os.SystemClock
-import math.*
+import com.weesnerdevelopment.playingwithgames.math.*
 
 object Timer {
     val maxFps: Number get() = GameVariables.fps.value

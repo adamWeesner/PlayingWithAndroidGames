@@ -1,6 +1,6 @@
 package com.weesnerdevelopment.playingwithgames.game
 
-import math.*
+import com.weesnerdevelopment.playingwithgames.math.*
 
 sealed class GameLooper {
     var interpolation: Number = 0

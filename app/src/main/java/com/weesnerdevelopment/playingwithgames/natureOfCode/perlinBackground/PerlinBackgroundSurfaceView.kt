@@ -10,9 +10,9 @@ import com.weesnerdevelopment.playingwithgames.game.GameSurfaceView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import math.Noise
-import math.map
-import math.plus
+import com.weesnerdevelopment.playingwithgames.math.Noise
+import com.weesnerdevelopment.playingwithgames.math.map
+import com.weesnerdevelopment.playingwithgames.math.plus
 
 class PerlinBackgroundSurfaceView(context: Context) : GameSurfaceView(context) {
     private var bitmap: Bitmap? = null

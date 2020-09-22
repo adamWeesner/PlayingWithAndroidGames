@@ -1,6 +1,6 @@
 package com.weesnerdevelopment.playingwithgames.objects
 
-import math.*
+import com.weesnerdevelopment.playingwithgames.math.*
 
 data class PhysicsBall(
     override var pos: Vector,

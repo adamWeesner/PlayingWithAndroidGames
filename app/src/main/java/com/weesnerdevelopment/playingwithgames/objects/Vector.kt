@@ -1,6 +1,6 @@
 package com.weesnerdevelopment.playingwithgames.objects
 
-import math.*
+import com.weesnerdevelopment.playingwithgames.math.*
 import kotlin.random.Random.Default.nextInt
 
 sealed class Vec {
@@ -40,6 +40,9 @@ data class Vector(
     override var x: Number,
     override var y: Number
 ) : Vec() {
+
+    constructor(both: Number): this(both, both)
+
     companion object {
         val zero get() = Vector(0, 0)
         val random get() = Vector(nextInt(1000), nextInt(1000))
@@ -95,7 +98,7 @@ data class Vector3D(
     var z: Number
 ) : Vec() {
     companion object {
-        val zero = Vector3D(0, 0, 0)
+        val zero get() = Vector3D(0, 0, 0)
 
         fun plus(first: Vector3D, second: Vector3D) = Vector3D(
             first.x + second.x,

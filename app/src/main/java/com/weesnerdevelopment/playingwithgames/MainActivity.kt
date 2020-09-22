@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
         val listSize = resources.getStringArray(R.array.fragments).size - 1
         fragments(resources, listSize)?.let {
-            println("fragment $it, ${it::class.simpleName}")
             StateVariables.currentFragment.value = listSize
             supportFragmentManager
                 .beginTransaction()

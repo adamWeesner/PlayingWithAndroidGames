@@ -4,10 +4,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
-import math.compareTo
-import math.minus
-import math.plus
-import math.times
+import com.weesnerdevelopment.playingwithgames.math.compareTo
+import com.weesnerdevelopment.playingwithgames.math.minus
+import com.weesnerdevelopment.playingwithgames.math.plus
+import com.weesnerdevelopment.playingwithgames.math.times
 
 abstract class Circle(
     @Volatile

@@ -1,9 +1,9 @@
 package com.weesnerdevelopment.playingwithgames.objects
 
 import android.graphics.Canvas
-import math.outsideOf
-import math.minus
-import math.times
+import com.weesnerdevelopment.playingwithgames.math.outsideOf
+import com.weesnerdevelopment.playingwithgames.math.minus
+import com.weesnerdevelopment.playingwithgames.math.times
 
 data class Ball(
     override var pos: Vector,

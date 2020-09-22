@@ -1,9 +1,9 @@
 package com.weesnerdevelopment.playingwithgames.objects
 
 import android.graphics.*
-import math.Noise
-import math.map
-import math.plus
+import com.weesnerdevelopment.playingwithgames.math.Noise
+import com.weesnerdevelopment.playingwithgames.math.map
+import com.weesnerdevelopment.playingwithgames.math.plus
 
 data class Walker(
     override var pos: Vector,

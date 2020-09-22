@@ -1,7 +1,7 @@
 package com.weesnerdevelopment.playingwithgames
 
-import math.compareTo
-import math.plus
+import com.weesnerdevelopment.playingwithgames.math.compareTo
+import com.weesnerdevelopment.playingwithgames.math.plus
 import org.junit.Assert
 import org.junit.Test
 

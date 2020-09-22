@@ -1,10 +1,10 @@
-package math
+package com.weesnerdevelopment.playingwithgames.math
 
 import com.weesnerdevelopment.playingwithgames.objects.Vector
 import com.weesnerdevelopment.playingwithgames.objects.Vector3D
 
 /**
- * Noise referenced from https://github.com/processing/p5.js/blob/1.1.9/src/math/noise.js#L36.
+ * Noise referenced from https://github.com/processing/p5.js/blob/1.1.9/src/com.weesnerdevelopment.playingwithgames.math/noise.js#L36.
  */
 object Noise {
     private val perlinYWrapB: Number = 4
