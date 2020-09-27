@@ -8,6 +8,7 @@
     <string name="bouncing_ball">Bouncing Ball</string>
     <string name="ball_follow_touch">Ball Follow Touch</string>
     <string name="ball_with_forces">Ball with Forces</string>
+    <string name="mr_nom">Mr Nom</string>
     <string-array name="looper_types">
         <item>Game FPS</item>
         <item>Max FPS</item>
@@ -26,5 +27,7 @@
         <item>@string/bouncing_ball</item>
         <item>@string/ball_follow_touch</item>
         <item>@string/ball_with_forces</item>
+        <item>-- Game Engine--</item>
+        <item>@string/mr_nom</item>
     </string-array>
 </resources>

@@ -1,2 +1,2 @@
 rootProject.name = "Playing With Games"
-include ':app'
+include ':app',':gameEngine',':androidGameEngine',':mrNom'
