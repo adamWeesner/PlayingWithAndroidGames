@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.weesnerDevelopment.mrNom.MrNomGame
 import com.weesnerDevelopment.playingWithGames.game.StateVariables
 import com.weesnerDevelopment.playingWithGames.natureOfCode.ballFollowTouch.BallFollowTouchFragment
 import com.weesnerDevelopment.playingWithGames.natureOfCode.ballWithForces.BallWithForcesFragment
@@ -24,13 +26,22 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.main_layout, it, it::class.simpleName)
+                .addToBackStack(null)
                 .commit()
         }
 
     }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0){
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
+    }
 }
 
-fun Context.fragments(resources: Resources, selection: Int): GameFragment? {
+fun Context.fragments(resources: Resources, selection: Int): Fragment? {
     val fragments = resources.getStringArray(R.array.fragments)
 
     return when (fragments[selection]) {
@@ -44,6 +55,7 @@ fun Context.fragments(resources: Resources, selection: Int): GameFragment? {
         getString(R.string.bouncing_ball) -> BouncingBallFragment()
         getString(R.string.ball_follow_touch) -> BallFollowTouchFragment()
         getString(R.string.ball_with_forces) -> BallWithForcesFragment()
+        getString(R.string.mr_nom) -> MrNomGame()
         else -> null
     }
 }

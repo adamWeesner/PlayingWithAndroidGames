@@ -1,7 +1,6 @@
 package com.weesnerDevelopment.playingWithGames
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.from
-import com.weesnerDevelopment.mrNom.MrNomGame
 import com.weesnerDevelopment.playingWithGames.game.GameLoopType
 import com.weesnerDevelopment.playingWithGames.game.GameSurfaceView
 import com.weesnerDevelopment.playingWithGames.game.GameVariables
@@ -86,9 +84,6 @@ abstract class GameFragment : Fragment() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, pos: Int, p3: Long) {
                 if (StateVariables.currentFragment.value == pos) return
 
-                if (resources.getStringArray(R.array.fragments)[pos] == getString(R.string.mr_nom))
-                    startActivity(Intent(requireContext(), MrNomGame::class.java))
-
                 val selectedFragment = requireContext().fragments(resources, pos)
                 StateVariables.currentFragment.value = pos
                 gameView.stop()
@@ -96,12 +91,15 @@ abstract class GameFragment : Fragment() {
                 if (selectedFragment != null) {
                     gameView.stop()
                     requireActivity().supportFragmentManager.apply {
-                        beginTransaction().replace(
-                            R.id.main_layout,
-                            findFragmentByTag(selectedFragment::class.simpleName)
-                                ?: selectedFragment,
-                            selectedFragment.tag
-                        ).commit()
+                        beginTransaction()
+                            .replace(
+                                R.id.main_layout,
+                                findFragmentByTag(selectedFragment::class.simpleName)
+                                    ?: selectedFragment,
+                                selectedFragment.tag
+                            )
+                            .addToBackStack(null)
+                            .commit()
                     }
                 }
             }
@@ -181,6 +179,7 @@ abstract class GameFragment : Fragment() {
         gameView.stop()
         foregroundScope?.cancel()
         foregroundScope = null
+        layout_game_variables.removeAllViews()
         super.onStop()
     }
 

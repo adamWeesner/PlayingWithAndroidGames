@@ -10,7 +10,7 @@ class AndroidRenderView(
     private val game: AndroidGame,
     private val frameBuffer: Bitmap,
     private val hardwareAccelerated: Boolean
-) : SurfaceView(game), Runnable {
+) : SurfaceView(game.requireContext()), Runnable {
     private var renderThread: Thread? = null
     private val surfaceHolder: SurfaceHolder = holder
 
