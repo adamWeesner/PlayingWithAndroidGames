@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/gameEngine" />
             <option value="$PROJECT_DIR$/mrNom" />
+            <option value="$PROJECT_DIR$/openGlGameEngine" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -11,11 +11,15 @@ sealed class Vec {
     abstract operator fun times(scalar: Number)
     abstract operator fun div(scalar: Number)
 
-    abstract fun magnitude(): Number
+    abstract fun length(): Number
     abstract fun magnitudeSquare(): Number
+    abstract fun distance(other: Vec): Number
+
+    val toRadians: Number = (1 / 180f) * Math.PI.toFloat()
+    val toDegrees: Number = (1 / Math.PI.toFloat()) * 180f
 
     open fun normalize() {
-        val mag = magnitude()
+        val mag = length()
         if (mag != 0) div(mag)
     }
 
@@ -40,7 +44,7 @@ data class Vector(
     override var y: Number
 ) : Vec() {
 
-    constructor(both: Number): this(both, both)
+    constructor(both: Number) : this(both, both)
 
     companion object {
         val zero get() = Vector(0, 0)
@@ -87,8 +91,27 @@ data class Vector(
         y /= scalar
     }
 
-    override fun magnitude() = sqrt(x.pow(2) + y.pow(2))
+    override fun length() = sqrt(x.pow(2) + y.pow(2))
     override fun magnitudeSquare() = x.pow(2) + y.pow(2)
+    override fun distance(other: Vec) = sqrt((x - other.x).pow(2) + (y - other.y).pow(2))
+
+    fun angle(): Number {
+        var angle = atan2(y, x) * toDegrees
+        if (angle < 0) angle += 360
+        return angle
+    }
+
+    fun rotate(angle: Number) {
+        val rad: Number = angle * toRadians
+        val cos = cos(rad)
+        val sin = sin(rad)
+
+        val newX = x * cos - y * sin
+        val newY = x * sin + y * cos
+
+        x = newX
+        y = newY
+    }
 }
 
 data class Vector3D(
@@ -148,8 +171,15 @@ data class Vector3D(
         z /= scalar
     }
 
-    override fun magnitude() = sqrt(x.pow(2) + y.pow(2) + z.pow(2))
+    override fun length() = sqrt(x.pow(2) + y.pow(2) + z.pow(2))
     override fun magnitudeSquare() = x.pow(2) + y.pow(2) + z.pow(2)
+    override fun distance(other: Vec): Number {
+        val distX = x - other.x
+        val distY = y - other.y
+        val distZ = if (other is Vector3D) z - other.z else z
+
+        return sqrt(distX.pow(2) + distY.pow(2) + distZ.pow(2))
+    }
 
     override fun toAbs(): Vector3D = super.toAbs().apply {
         z = z.absoluteValue

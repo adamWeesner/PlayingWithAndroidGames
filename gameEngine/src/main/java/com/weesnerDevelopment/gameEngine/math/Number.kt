@@ -344,6 +344,24 @@ fun cos(value: Number): Number = when (value) {
 }
 
 /**
+ * Get the sine for the [value].
+ */
+fun sin(value: Number): Number = when (value) {
+    is Float -> kotlin.math.sin(value)
+    is Double -> kotlin.math.sin(value)
+    else -> throw IllegalArgumentException("Cannot get sin for type ${value::class}")
+}
+
+/**
+ * Get the atan2 for the [y] and [x].
+ */
+fun atan2(y: Number, x: Number): Number = when (y) {
+    is Float -> kotlin.math.atan2(y.toFloat(), x.toFloat())
+    is Double -> kotlin.math.atan2(y.toDouble(), x.toDouble())
+    else -> throw IllegalArgumentException("Cannot get cos for type ${y::class}")
+}
+
+/**
  * Floor the [value].
  */
 fun floor(value: Number): Number = when (value) {
