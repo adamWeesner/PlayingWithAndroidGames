@@ -1,12 +1,14 @@
 package com.weesnerDevelopment.openGlGameEngine
 
 import android.opengl.GLSurfaceView
+import android.view.View
 import com.weesnerDevelopment.gameEngine.util.Size
 import javax.microedition.khronos.opengles.GL10
 
 class GlGraphics(
-    val glView: GLSurfaceView
+    glView: GLSurfaceView
 ) {
+    private val parent = glView.parent as View
     lateinit var gl: GL10
-    lateinit var size: Size
+    var size: Size = Size(parent.width, parent.height)
 }

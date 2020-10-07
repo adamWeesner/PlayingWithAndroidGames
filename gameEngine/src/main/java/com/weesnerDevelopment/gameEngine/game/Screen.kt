@@ -8,13 +8,13 @@ import com.weesnerDevelopment.gameEngine.math.plus
 import com.weesnerDevelopment.gameEngine.util.Size
 
 abstract class Screen(game: Game) {
-    abstract fun update(deltaTime: Float)
-    abstract fun present(deltaTime: Float)
+    open fun update(deltaTime: Float) {}
+    open fun present(deltaTime: Float) {}
 
-    abstract fun pause()
-    abstract fun resume()
+    open fun pause() {}
+    open fun resume() {}
 
-    abstract fun dispose()
+    open fun dispose() {}
 
     fun inBounds(
         event: Input.TouchEvent,

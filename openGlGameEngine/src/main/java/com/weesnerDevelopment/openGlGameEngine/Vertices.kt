@@ -25,7 +25,7 @@ data class Vertices(
 
     init {
         if (maxIndices > 0) {
-            buffer = ByteBuffer.allocateDirect(maxIndices * Short.SIZE_BYTES / 8).apply {
+            buffer = ByteBuffer.allocateDirect(maxIndices * Short.SIZE_BITS / 8).apply {
                 order(ByteOrder.nativeOrder())
             }
             indices = buffer.asShortBuffer()
@@ -34,18 +34,20 @@ data class Vertices(
         }
     }
 
-    fun setVertices(verticesArray: FloatArray, offset: Int, length: Int) {
+    fun setVertices(verticesArray: FloatArray, offset: Int = 0, length: Int = -1) {
+        val useLength = if (length == -1) verticesArray.size else length
         vertices.apply {
             clear()
-            put(verticesArray, offset, length)
+            put(verticesArray, offset, useLength)
             flip()
         }
     }
 
-    fun seIndices(indicesArray: ShortArray, offset: Int, length: Int) {
+    fun setIndices(indicesArray: ShortArray, offset: Int = 0, length: Int = -1) {
+        val useLength = if (length == -1) indicesArray.size else length
         indices?.apply {
             clear()
-            put(indicesArray, offset, length)
+            put(indicesArray, offset, useLength)
             flip()
         }
     }
@@ -64,7 +66,7 @@ data class Vertices(
         if (hasTexCoords) {
             glGraphics.gl.glEnableClientState(GL_TEXTURE_COORD_ARRAY)
             vertices.position(if (hasColor) 6 else 2)
-            glGraphics.gl.glColorPointer(2, GL_FLOAT, vertexSize, vertices)
+            glGraphics.gl.glTexCoordPointer(2, GL_FLOAT, vertexSize, vertices)
         }
     }
 

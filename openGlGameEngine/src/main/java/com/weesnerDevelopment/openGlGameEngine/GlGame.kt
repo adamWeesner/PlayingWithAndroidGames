@@ -1,10 +1,12 @@
 package com.weesnerDevelopment.openGlGameEngine
 
 import android.opengl.GLSurfaceView
+import android.opengl.GLSurfaceView.Renderer
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.weesnerDevelopment.androidGameEngine.audio.AndroidAudio
 import com.weesnerDevelopment.androidGameEngine.file.AndroidFileIO
 import com.weesnerDevelopment.androidGameEngine.input.AndroidInput
@@ -27,11 +29,10 @@ enum class GlGameState {
     Idle
 }
 
-class GlGame : AppCompatActivity(), Game, GLSurfaceView.Renderer {
+open class GlGame : Fragment(), Game, Renderer {
     lateinit var glView: GLSurfaceView
     lateinit var glGraphics: GlGraphics
-    override var graphics: Graphics =
-        throw IllegalArgumentException("You should be using glGraphics")
+    override lateinit var graphics: Graphics
     override lateinit var audio: Audio
     override lateinit var input: Input
     override lateinit var fileIO: FileIO
@@ -39,8 +40,8 @@ class GlGame : AppCompatActivity(), Game, GLSurfaceView.Renderer {
     override val backStack: Stack<Screen> = Stack()
     override var screen: Screen = startScreen
         set(value) {
-            screen.pause()
-            screen.dispose()
+            screen?.pause()
+            screen?.dispose()
 
             value.resume()
             value.update(0f)
@@ -51,22 +52,24 @@ class GlGame : AppCompatActivity(), Game, GLSurfaceView.Renderer {
     var stateChanged = Object()
     var startTime = System.nanoTime()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        glView = GLSurfaceView(this).apply {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        glView = GLSurfaceView(requireContext()).apply {
             setRenderer(this@GlGame)
-            setContentView(this)
-            glGraphics = GlGraphics(this)
-            input = AndroidInput(this@GlGame, this, Size(1, 1))
         }
-        fileIO = AndroidFileIO(this)
-        audio = AndroidAudio(this)
+        fileIO = AndroidFileIO(requireContext())
+        audio = AndroidAudio(requireActivity())
+
+        return glView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        glGraphics = GlGraphics(glView)
+        input = AndroidInput(requireContext(), glView, Size(1, 1))
     }
 
     override fun onResume() {
@@ -76,7 +79,7 @@ class GlGame : AppCompatActivity(), Game, GLSurfaceView.Renderer {
 
     override fun onPause() {
         synchronized(stateChanged) {
-            state = if (isFinishing) GlGameState.Finished else GlGameState.Paused
+            state = if (isRemoving) GlGameState.Finished else GlGameState.Paused
             while (true) {
                 try {
                     stateChanged.wait()

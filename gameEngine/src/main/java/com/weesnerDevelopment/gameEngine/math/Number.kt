@@ -372,6 +372,16 @@ fun floor(value: Number): Number = when (value) {
 }
 
 /**
+ * Ceil the [value].
+ */
+fun ceil(value: Number): Number = when (value) {
+    is Int -> value
+    is Float -> kotlin.math.ceil(value)
+    is Double -> kotlin.math.ceil(value)
+    else -> throw IllegalArgumentException("Cannot get floor for type ${value::class}")
+}
+
+/**
  * Floor the [value].
  */
 fun sqrt(value: Number): Number = when (value) {
@@ -379,3 +389,6 @@ fun sqrt(value: Number): Number = when (value) {
     is Double -> kotlin.math.sqrt(value)
     else -> throw IllegalArgumentException("Cannot get sqrt for type ${value::class}")
 }
+
+val Number.toRadians: Number get() = this * (1 / 180f) * Math.PI.toFloat()
+val Number.toDegrees: Number get() = this * (1 / Math.PI.toFloat()) * 180f

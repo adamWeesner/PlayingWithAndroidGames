@@ -8,7 +8,6 @@
     <string name="bouncing_ball">Bouncing Ball</string>
     <string name="ball_follow_touch">Ball Follow Touch</string>
     <string name="ball_with_forces">Ball with Forces</string>
-    <string name="mr_nom">Mr Nom</string>
     <string-array name="looper_types">
         <item>Game FPS</item>
         <item>Max FPS</item>
@@ -29,5 +28,20 @@
         <item>@string/ball_with_forces</item>
         <item>-- Game Engine--</item>
         <item>@string/mr_nom</item>
+        <item>-- Open Gl Samples--</item>
+        <item>@string/gl_game_sample</item>
+        <item>@string/first_triangle_sample</item>
+        <item>@string/colored_triangle_sample</item>
+        <item>@string/textured_triangle_sample</item>
+        <item>@string/indexed_triangle_sample</item>
+        <item>@string/blending_sample</item>
+        <item>@string/bobs_sample</item>
+        <item>@string/cannon_sample</item>
+        <item>@string/cannon_gravity_sample</item>
+        <item>@string/cannon_gravity_2_sample</item>
+        <item>@string/cannon_zoom_sample</item>
+        <item>@string/cannon_texture_sample</item>
+        <item>@string/cannon_texture_batch_sample</item>
+        <item>@string/animation_sample</item>
     </string-array>
 </resources>

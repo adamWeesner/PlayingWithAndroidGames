@@ -21,12 +21,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val lastIndex = resources.getStringArray(R.array.fragments).lastIndex
+
         fragments(resources, 1)?.let {
             StateVariables.currentFragment.value = 1
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.main_layout, it, it::class.simpleName)
-                .addToBackStack(null)
                 .commit()
         }
 
@@ -38,24 +39,5 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
-    }
-}
-
-fun Context.fragments(resources: Resources, selection: Int): Fragment? {
-    val fragments = resources.getStringArray(R.array.fragments)
-
-    return when (fragments[selection]) {
-        // random
-        getString(R.string.bouncing_balls) -> BallBounceFragment()
-        getString(R.string.gravity_circles) -> CirclePhysicsFragment()
-        getString(R.string.gravity_collision_circles) -> CircleCollisionPhysicsFragment()
-        // nature of code
-        getString(R.string.random_walker) -> WalkerFragment()
-        getString(R.string.perlin_background) -> PerlinBackgroundFragment()
-        getString(R.string.bouncing_ball) -> BouncingBallFragment()
-        getString(R.string.ball_follow_touch) -> BallFollowTouchFragment()
-        getString(R.string.ball_with_forces) -> BallWithForcesFragment()
-        getString(R.string.mr_nom) -> MrNomGame()
-        else -> null
     }
 }

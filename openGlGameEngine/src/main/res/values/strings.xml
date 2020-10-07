@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gl_game_sample">Gl Game Sample</string>
+    <string name="first_triangle_sample">First Triangle</string>
+    <string name="colored_triangle_sample">Colored Triangle</string>
+    <string name="textured_triangle_sample">Textured Triangle</string>
+    <string name="indexed_triangle_sample">Indexed</string>
+    <string name="blending_sample">Blending</string>
+    <string name="bobs_sample">Bobs</string>
+    <string name="cannon_sample">Cannon</string>
+    <string name="cannon_gravity_sample">Cannon Gravity</string>
+    <string name="cannon_gravity_2_sample">Cannon Collision</string>
+    <string name="cannon_zoom_sample">Cannon Zoom</string>
+    <string name="cannon_texture_sample">Cannon Texture</string>
+    <string name="cannon_texture_batch_sample">Cannon Batch Texture</string>
+    <string name="animation_sample">Animation</string>
+</resources>

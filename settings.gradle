@@ -1,2 +1,7 @@
 rootProject.name = "Playing With Games"
-include ':app',':gameEngine',':androidGameEngine',':mrNom', ':openGlGameEngine'
+include ':app',
+        ':gameEngine',
+        ':androidGameEngine',
+        ':mrNom',
+        ':openGlGameEngine',
+        ':superJumper'

@@ -30,17 +30,17 @@ data class PhysicsBall(
     }
 
     fun checkCollision(other: PhysicsBall) {
-        val xDistance = (pos.x - other.pos.x).absoluteValue
-        val yDistance = (pos.y - other.pos.y).absoluteValue
-
-        val distance = sqrt(xDistance.pow(2) + yDistance.pow(2))
-
-        println("distance $distance | radii ${radius + other.radius}")
-
+        val distance = pos.distance(other.pos)
         if (distance <= radius + other.radius) {
-            collided = true
-            other.collided = true
-            println("collided...")
+            val xDistance = (pos.x - other.pos.x).absoluteValue
+            val yDistance = (pos.y - other.pos.y).absoluteValue
+
+            val distance = sqrt(xDistance.pow(2) + yDistance.pow(2))
+
+            if (distance <= (radius + other.radius).pow(2)) {
+                collided = true
+                other.collided = true
+            }
         }
     }
 }
