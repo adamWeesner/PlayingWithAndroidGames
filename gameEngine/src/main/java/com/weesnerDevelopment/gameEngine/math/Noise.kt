@@ -32,7 +32,7 @@ object Noise {
             floor(startPoint.y).toInt(),
             floor(startPoint.z).toInt()
         )
-        val startMinusFloor = Vector3D.minus(startPoint, startFloored)
+        val startMinusFloor = startPoint - startFloored
 
         if (perlin == null)
             perlin = Array((perlinSize + 1).toInt()) { Math.random() }
@@ -42,7 +42,7 @@ object Noise {
             var of: Number =
                 startFloored.x + startFloored.y.shl(perlinYWrapB) + startFloored.z.shl(perlinZWrapB)
 
-            val pointF = Vector(startMinusFloor.x.scaledCosine, startMinusFloor.y.scaledCosine)
+            val pointF = Vector2D(startMinusFloor.x.scaledCosine, startMinusFloor.y.scaledCosine)
             val point3DN = Vector3D(
                 perlinValue(of),
                 perlinValue(of, perlinYWrap),

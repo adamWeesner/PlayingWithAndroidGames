@@ -13,7 +13,7 @@ import com.weesnerDevelopment.randoms.bouncingBall.BallBounceFragment
 import com.weesnerDevelopment.randoms.circlePhysics.CirclePhysicsFragment
 import com.weesnerDevelopment.randoms.circlePhysics.collision.CircleCollisionPhysicsFragment
 
-fun Context.fragments(resources: Resources, selection: Int): Fragment? {
+fun fragments(resources: Resources, selection: Int): Fragment? {
     val fragments = resources.getStringArray(R.array.fragments)
 
     return when (fragments[selection]) {

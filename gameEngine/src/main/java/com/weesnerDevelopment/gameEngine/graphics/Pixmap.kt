@@ -1,6 +1,6 @@
 package com.weesnerDevelopment.gameEngine.graphics
 
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
 
 interface Pixmap {
     val size: Size

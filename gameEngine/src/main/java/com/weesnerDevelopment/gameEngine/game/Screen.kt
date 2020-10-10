@@ -1,11 +1,7 @@
 package com.weesnerDevelopment.gameEngine.game
 
 import com.weesnerDevelopment.gameEngine.input.Input
-import com.weesnerDevelopment.gameEngine.math.Vector
-import com.weesnerDevelopment.gameEngine.math.compareTo
-import com.weesnerDevelopment.gameEngine.math.minus
-import com.weesnerDevelopment.gameEngine.math.plus
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.*
 
 abstract class Screen(game: Game) {
     open fun update(deltaTime: Float) {}
@@ -18,7 +14,7 @@ abstract class Screen(game: Game) {
 
     fun inBounds(
         event: Input.TouchEvent,
-        position: Vector,
+        position: Vector2D,
         size: Size,
         truth: () -> Unit
     ) {

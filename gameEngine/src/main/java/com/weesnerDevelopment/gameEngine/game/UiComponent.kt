@@ -3,14 +3,10 @@ package com.weesnerDevelopment.gameEngine.game
 import com.weesnerDevelopment.gameEngine.graphics.Graphics
 import com.weesnerDevelopment.gameEngine.graphics.Pixmap
 import com.weesnerDevelopment.gameEngine.input.Input
-import com.weesnerDevelopment.gameEngine.util.Size
-import com.weesnerDevelopment.gameEngine.math.Vector
-import com.weesnerDevelopment.gameEngine.math.compareTo
-import com.weesnerDevelopment.gameEngine.math.minus
-import com.weesnerDevelopment.gameEngine.math.plus
+import com.weesnerDevelopment.gameEngine.math.*
 
 abstract class UiComponent(
-    open val position: Vector,
+    open val position: Vector2D,
     open val size: Size?
 ) {
     abstract fun draw(graphics: Graphics)
@@ -28,11 +24,16 @@ abstract class UiComponent(
 
 data class Image(
     private val image: Pixmap,
-    override val position: Vector = Vector.zero,
+    override val position: Vector2D = Vector2D(0, 0),
     override val size: Size? = null,
-    var offset: Vector? = null
+    var offset: Vector2D? = null
 ) : UiComponent(position, size ?: image.size) {
-    constructor(image: Pixmap, position: Vector) : this(image, position, image.size, Vector.zero)
+    constructor(image: Pixmap, position: Vector2D) : this(
+        image,
+        position,
+        image.size,
+        Vector2D(0, 0)
+    )
 
     override fun draw(graphics: Graphics) {
         if (size == null && offset == null)

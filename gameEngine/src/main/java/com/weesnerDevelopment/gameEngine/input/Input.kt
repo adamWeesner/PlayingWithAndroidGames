@@ -1,6 +1,6 @@
 package com.weesnerDevelopment.gameEngine.input
 
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 import com.weesnerDevelopment.gameEngine.math.Vector3D
 
 interface Input {
@@ -23,7 +23,7 @@ interface Input {
 
     class TouchEvent {
         lateinit var type: TouchEventType
-        lateinit var position: Vector
+        lateinit var position: Vector2D
         var pointer: Int = -1
     }
 
@@ -33,6 +33,6 @@ interface Input {
     fun getKeyEvents(): List<KeyEvent>
 
     fun isTouchDown(pointer: Int): Boolean
-    fun getTouch(pointer: Int): Vector
+    fun getTouch(pointer: Int): Vector2D
     fun getTouchEvents(): List<TouchEvent>
 }

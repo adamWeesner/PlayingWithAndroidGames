@@ -1,6 +1,6 @@
 package com.weesnerDevelopment.gameEngine.math
 
- internal interface V<T> {
+internal interface V<T> {
     var x: Number
     var y: Number
 
@@ -25,11 +25,6 @@ internal interface V2D<T : V2D<T>> : V<T> {
     fun normalize(): T {
         val mag = length()
         return if (mag != 0) div(mag) else div(1)
-    }
-
-    fun limit(max: Number): V2D<T> {
-        val mag = magnitudeSquare()
-        return if (mag > max.pow(2)) this / sqrt(mag) * max else this
     }
 
     fun distanceSquared(other: T) =
@@ -76,6 +71,16 @@ data class Vector2D(
     override fun div(scalar: Number) = Vector2D(x / scalar, y / scalar)
 
     override fun toAbs() = Vector2D(x.absoluteValue, y.absoluteValue)
+
+    fun limit(max: Number): Vector2D {
+        var newVector = this
+        val mag = magnitudeSquare()
+        if (mag > max.pow(2)) {
+            newVector /= sqrt(mag)
+            newVector *= max
+        }
+        return newVector
+    }
 }
 
 data class UV(

@@ -1,7 +1,7 @@
 package com.weesnerDevelopment.gameEngine.objects
 
 import com.weesnerDevelopment.gameEngine.math.*
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
 
 class SpatialHashGrid(
     val worldSize: Size,
@@ -74,19 +74,19 @@ class SpatialHashGrid(
     fun getCellIds(obj: GameObject): IntArray {
         var i = 0
 
-        val value1 = Vector(
+        val value1 = Vector2D(
             floor(obj.bounds.lowerLeft.x / cellSize),
             floor(obj.bounds.lowerLeft.y / cellSize)
         )
-        val value2 = Vector(
+        val value2 = Vector2D(
             floor((obj.bounds.lowerLeft.x + obj.bounds.size.width) / cellSize),
             floor((obj.bounds.lowerLeft.y + obj.bounds.size.height) / cellSize)
         )
 
-        fun Vector.withCellsPerRow() = this.x + this.y * cellsPerRow
-        fun Vector.withCellsPerRow(other: Vector) = this.x + other.y * cellsPerRow
-        fun Vector.valueInWidth() = x >= 0 && x < cellsPerRow
-        fun Vector.valueInHeight() = y >= 0 && y < cellsPerColumn
+        fun Vector2D.withCellsPerRow() = this.x + this.y * cellsPerRow
+        fun Vector2D.withCellsPerRow(other: Vector2D) = this.x + other.y * cellsPerRow
+        fun Vector2D.valueInWidth() = x >= 0 && x < cellsPerRow
+        fun Vector2D.valueInHeight() = y >= 0 && y < cellsPerColumn
 
         when {
             value1.x == value2.x && value1.y == value2.y -> {
