@@ -1,4 +1,4 @@
-package com.weesnerDevelopment.playingWithGames.game
+package com.weesnerDevelopment.randomGameEngine.game
 
 enum class GameLoopType(val value: String) {
     AS_FAST_AS_POSSIBLE("Unlimited"),

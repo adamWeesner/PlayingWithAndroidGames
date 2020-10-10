@@ -1,4 +1,4 @@
-package com.weesnerDevelopment.playingWithGames.game
+package com.weesnerDevelopment.randomGameEngine.game
 
 import android.content.Context
 import android.graphics.Canvas

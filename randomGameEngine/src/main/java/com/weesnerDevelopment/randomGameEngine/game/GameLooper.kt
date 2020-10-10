@@ -1,4 +1,4 @@
-package com.weesnerDevelopment.playingWithGames.game
+package com.weesnerDevelopment.randomGameEngine.game
 
 import com.weesnerDevelopment.gameEngine.math.*
 

@@ -1,5 +1,8 @@
 rootProject.name = "Playing With Games"
 include ':app',
+        ':randomGameEngine',
+        ':randoms',
+        ':natureOfCode',
         ':gameEngine',
         ':androidGameEngine',
         ':mrNom',

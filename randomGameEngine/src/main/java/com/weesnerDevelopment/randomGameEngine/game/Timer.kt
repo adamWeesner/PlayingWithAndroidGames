@@ -1,10 +1,10 @@
-package com.weesnerDevelopment.playingWithGames.game
+package com.weesnerDevelopment.randomGameEngine.game
 
 import android.os.SystemClock
 import com.weesnerDevelopment.gameEngine.math.*
 
 object Timer {
-    val maxFps: Number get() = GameVariables.fps.value
+    val maxFps: Number get() = GameVariables.fps.value!!
     val framePeriod: Number = 1000 / maxFps
     val maxFrameSkip: Number = 10
 

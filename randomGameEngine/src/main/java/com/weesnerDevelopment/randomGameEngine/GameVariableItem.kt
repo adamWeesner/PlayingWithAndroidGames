@@ -1,4 +1,4 @@
-package com.weesnerDevelopment.playingWithGames
+package com.weesnerDevelopment.randomGameEngine
 
 import android.content.Context
 import android.text.InputType
@@ -11,8 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputLayout
-import com.weesnerDevelopment.playingWithGames.game.GameVariable
-
+import com.weesnerDevelopment.randomGameEngine.game.GameVariable
 
 class GameVariableItem<T : Any> : ConstraintLayout {
     private val textInputLayout: TextInputLayout by lazy { findViewById<TextInputLayout>(R.id.text_input_layout_game_variable) }

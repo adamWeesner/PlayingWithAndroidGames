@@ -1,4 +1,4 @@
-package com.weesnerDevelopment.playingWithGames
+package com.weesnerDevelopment.randomGameEngine
 
 import android.content.Context
 import android.os.Bundle
@@ -9,10 +9,10 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.from
-import com.weesnerDevelopment.playingWithGames.game.GameLoopType
-import com.weesnerDevelopment.playingWithGames.game.GameSurfaceView
-import com.weesnerDevelopment.playingWithGames.game.GameVariables
-import com.weesnerDevelopment.playingWithGames.game.StateVariables
+import com.weesnerDevelopment.randomGameEngine.game.GameLoopType
+import com.weesnerDevelopment.randomGameEngine.game.GameSurfaceView
+import com.weesnerDevelopment.randomGameEngine.game.GameVariables
+import com.weesnerDevelopment.randomGameEngine.game.StateVariables
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -74,34 +74,18 @@ abstract class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         create()
+        StateVariables.currentGameView.value = gameView
 
         layout_game_variables.removeAllViews()
         gameVariables.forEach { layout_game_variables.addView(it) }
 
-        spinner_fragments.setSelection(StateVariables.currentFragment.value)
+        spinner_fragments.setSelection(StateVariables.currentFragment.value!!)
         spinner_fragments.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, pos: Int, p3: Long) {
                 if (StateVariables.currentFragment.value == pos) return
 
-                val selectedFragment = requireContext().fragments(resources, pos)
                 StateVariables.currentFragment.value = pos
-                gameView.stop()
-
-                if (selectedFragment != null) {
-                    gameView.stop()
-                    requireActivity().supportFragmentManager.apply {
-                        beginTransaction()
-                            .replace(
-                                R.id.main_layout,
-                                findFragmentByTag(selectedFragment::class.simpleName)
-                                    ?: selectedFragment,
-                                selectedFragment.tag
-                            )
-                            .addToBackStack(null)
-                            .commit()
-                    }
-                }
             }
         }
 

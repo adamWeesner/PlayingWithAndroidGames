@@ -1,4 +1,4 @@
-package com.weesnerDevelopment.playingWithGames.game
+package com.weesnerDevelopment.randomGameEngine.game
 
 object GameVariables {
     val pathColorCount = GameVariable(2)
@@ -10,4 +10,5 @@ object GameVariables {
 object StateVariables {
     val resetGame = GameVariable(false)
     val currentFragment = GameVariable(1)
+    val currentGameView = GameVariable<GameSurfaceView>(null)
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="looper_types">
+        <item>Game FPS</item>
+        <item>Max FPS</item>
+        <item>Vary FPS</item>
+        <item>Game Speed</item>
+        <item>Unlimited</item>
+    </string-array>
+</resources>
