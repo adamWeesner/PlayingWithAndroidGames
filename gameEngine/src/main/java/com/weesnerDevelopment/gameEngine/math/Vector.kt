@@ -1,76 +1,48 @@
 package com.weesnerDevelopment.gameEngine.math
 
-import kotlin.random.Random.Default.nextInt
+ internal interface V<T> {
+    var x: Number
+    var y: Number
 
-sealed class Vec {
-    open lateinit var x: Number
-    open lateinit var y: Number
+    fun length(): Number
+    fun magnitudeSquare(): Number
+    fun toAbs(): T
 
-    abstract operator fun plus(other: Vec): Vec
-    abstract operator fun minus(other: Vec): Vec
-    abstract operator fun times(scalar: Number): Vec
-    abstract operator fun div(scalar: Number): Vec
-
-    abstract fun length(): Number
-    abstract fun magnitudeSquare(): Number
-    abstract fun distance(other: Vec): Number
-
-    open fun normalize() {
-        val mag = length()
-        if (mag != 0) div(mag)
-    }
-
-    open fun limit(max: Number): Vec {
-        val mag = magnitudeSquare()
-        if (mag > max.pow(2)) {
-            this / sqrt(mag)
-            this * max
-        }
-
-        return this
-    }
-
-    open fun toAbs(): Vec = apply {
-        x = x.absoluteValue
-        y = y.absoluteValue
-    }
+    operator fun plus(other: T): T
+    operator fun minus(other: T): T
+    operator fun times(scalar: Number): T
+    operator fun div(scalar: Number): T
 }
 
-sealed class Vec2D(
-    override var x: Number,
-    override var y: Number
-) : Vec() {
-    override operator fun plus(other: Vec): Vec2D {
-        x += other.x
-        y += other.y
+internal interface V2D<T : V2D<T>> : V<T> {
+    override fun toAbs(): T
 
-        return this
+    override operator fun plus(other: T): T
+    override operator fun minus(other: T): T
+    override operator fun times(scalar: Number): T
+    override operator fun div(scalar: Number): T
+
+    fun normalize(): T {
+        val mag = length()
+        return if (mag != 0) div(mag) else div(1)
     }
 
-    override fun minus(other: Vec): Vec2D {
-        x -= other.x
-        y -= other.y
-
-        return this
+    fun limit(max: Number): V2D<T> {
+        val mag = magnitudeSquare()
+        return if (mag > max.pow(2)) this / sqrt(mag) * max else this
     }
 
-    override fun times(scalar: Number): Vec2D {
-        x *= scalar
-        y *= scalar
+    fun distanceSquared(other: T) =
+        (x - other.x).pow(2) + (y - other.y).pow(2)
 
-        return this
-    }
+    fun distance(other: T) =
+        sqrt(distanceSquared(other))
 
-    override fun div(scalar: Number): Vec2D {
-        x /= scalar
-        y /= scalar
+    override fun length() =
+        sqrt(x.pow(2) + y.pow(2))
 
-        return this
-    }
-
-    override fun length() = sqrt(x.pow(2) + y.pow(2))
-    override fun magnitudeSquare() = x.pow(2) + y.pow(2)
-    override fun distance(other: Vec) = sqrt((x - other.x).pow(2) + (y - other.y).pow(2))
+    override fun magnitudeSquare() =
+        x.pow(2) + y.pow(2)
 
     fun angle(): Number {
         var angle = atan2(y, x).toDegrees
@@ -91,136 +63,155 @@ sealed class Vec2D(
     }
 }
 
+data class Vector2D(
+    override var x: Number,
+    override var y: Number
+) : V2D<Vector2D> {
+    override fun plus(other: Vector2D) = Vector2D(x + other.x, y + other.y)
+
+    override fun minus(other: Vector2D) = Vector2D(x - other.x, y - other.y)
+
+    override fun times(scalar: Number) = Vector2D(x * scalar, y * scalar)
+
+    override fun div(scalar: Number) = Vector2D(x / scalar, y / scalar)
+
+    override fun toAbs() = Vector2D(x.absoluteValue, y.absoluteValue)
+}
+
 data class UV(
     var u: Number,
     var v: Number
-) : Vec2D(u.toFloat(), v.toFloat()) {
-    fun getU() = u.toFloat()
-    fun getV() = v.toFloat()
-
+) : V2D<UV> {
     @Deprecated(
         level = DeprecationLevel.ERROR,
         message = ("Use `u` instead"),
         replaceWith = ReplaceWith("u")
     )
-    override var x: Number = u
+    override var x: Number = 0
+        get() = u
 
     @Deprecated(
         level = DeprecationLevel.ERROR,
         message = ("Use `v` instead"),
         replaceWith = ReplaceWith("v")
     )
-    override var y: Number = v
+    override var y: Number = 0
+        get() = v
+
+    override fun plus(other: UV) = UV(u + other.u, v + other.v)
+
+    override fun minus(other: UV) = UV(u - other.u, v - other.v)
+
+    override fun times(scalar: Number) = UV(u * scalar, v * scalar)
+
+    override fun div(scalar: Number) = UV(u / scalar, v / scalar)
+
+    override fun toAbs() = UV(u.absoluteValue, v.absoluteValue)
 }
 
-data class Vector(
-    override var x: Number,
-    override var y: Number
-) : Vec2D(x, y) {
-    constructor(both: Number) : this(both, both)
+data class Size(
+    val width: Number,
+    val height: Number
+) : V2D<Size> {
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = ("Use `width` instead"),
+        replaceWith = ReplaceWith("width")
+    )
+    override var x: Number = width
 
-    companion object {
-        val zero get() = Vector(0, 0)
-        val random get() = Vector(nextInt(1000), nextInt(1000))
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = ("Use `height` instead"),
+        replaceWith = ReplaceWith("height")
+    )
+    override var y: Number = height
 
-        fun add(first: Vec2D, second: Vec2D) = Vector(
-            first.x + second.x,
-            first.y + second.y
-        )
+    override fun plus(other: Size) = Size(width + other.width, height + other.height)
 
-        fun minus(first: Vec2D, second: Vec2D) = Vector(
-            first.x - second.x,
-            first.y - second.y
-        )
+    override fun minus(other: Size) = Size(width - other.width, height - other.height)
 
-        fun times(vector: Vec2D, scalar: Number) = Vector(
-            vector.x * scalar,
-            vector.y * scalar
-        )
+    override fun times(scalar: Number) = Size(width * scalar, height * scalar)
 
-        fun div(vector: Vec2D, scalar: Number) = Vector(
-            vector.x / scalar,
-            vector.y / scalar
-        )
+    override fun div(scalar: Number) = Size(width / scalar, height / scalar)
+
+    override fun toAbs() = Size(width.absoluteValue, height.absoluteValue)
+
+    fun toVector2D() = Vector2D(width, height)
+}
+
+
+internal interface V3D<T : V3D<T>> : V<T> {
+    var z: Number
+
+    override fun toAbs(): T
+
+    override operator fun plus(other: T): T
+    override operator fun minus(other: T): T
+    override operator fun times(scalar: Number): T
+    override operator fun div(scalar: Number): T
+
+    fun normalize(): T {
+        val mag = length()
+        return if (mag != 0) div(mag) else div(1)
+    }
+
+    fun limit(max: Number): V3D<T> {
+        val mag = magnitudeSquare()
+        return if (mag > max.pow(2)) this / sqrt(mag) * max else this
+    }
+
+    fun distance(other: T) =
+        sqrt((x - other.x).pow(2) + (y - other.y).pow(2) + (z - other.z).pow(2))
+
+    override fun length() =
+        sqrt(x.pow(2) + y.pow(2) + z.pow(2))
+
+    override fun magnitudeSquare() =
+        x.pow(2) + y.pow(2) + z.pow(2)
+
+    fun angle(): Number {
+        var angle = atan2(y, x).toDegrees
+        if (angle < 0) angle += 360
+        return angle
+    }
+
+    // todo figure out how to rotate a 3d object
+    fun rotate(angle: Number) {
+        val rad: Number = angle.toRadians
+        val cos = cos(rad)
+        val sin = sin(rad)
+
+        val newX = x * cos - y * sin
+        val newY = x * sin + y * cos
+
+        x = newX
+        y = newY
     }
 }
 
 data class Vector3D(
     override var x: Number,
     override var y: Number,
-    var z: Number
-) : Vec() {
-    companion object {
-        val zero get() = Vector3D(0, 0, 0)
+    override var z: Number
+) : V3D<Vector3D> {
+    override operator fun plus(other: Vector3D) =
+        Vector3D(x + other.x, y + other.y, z + other.z)
 
-        fun plus(first: Vector3D, second: Vector3D) = Vector3D(
-            first.x + second.x,
-            first.y + second.y,
-            first.z + second.z
-        )
+    override fun minus(other: Vector3D) =
+        Vector3D(x - other.x, y - other.y, z - other.z)
 
-        fun minus(first: Vector3D, second: Vector3D) = Vector3D(
-            first.x - second.x,
-            first.y - second.y,
-            first.z - second.z
-        )
+    override fun times(scalar: Number) =
+        Vector3D(x * scalar, y * scalar, z * scalar)
 
-        fun times(vector: Vector3D, scalar: Number) = Vector3D(
-            vector.x * scalar,
-            vector.y * scalar,
-            vector.z * scalar
-        )
+    override fun div(scalar: Number) =
+        Vector3D(x / scalar, y / scalar, z / scalar)
 
-        fun div(vector: Vector3D, scalar: Number) = Vector3D(
-            vector.x / scalar,
-            vector.y / scalar,
-            vector.z / scalar
-        )
+    override fun distance(other: Vector3D): Number {
+        val distance = this - other
+
+        return sqrt(distance.x.pow(2) + distance.y.pow(2) + distance.z.pow(2))
     }
 
-    override operator fun plus(other: Vec): Vector3D {
-        x += other.x
-        y += other.y
-        if (other is Vector3D) z += other.z else z
-
-        return this
-    }
-
-    override fun minus(other: Vec): Vector3D {
-        x -= other.x
-        y -= other.y
-        if (other is Vector3D) z -= other.z else z
-
-        return this
-    }
-
-    override fun times(scalar: Number): Vector3D {
-        x *= scalar
-        y *= scalar
-        z *= scalar
-
-        return this
-    }
-
-    override fun div(scalar: Number): Vector3D {
-        x /= scalar
-        y /= scalar
-        z /= scalar
-
-        return this
-    }
-
-    override fun length() = sqrt(x.pow(2) + y.pow(2) + z.pow(2))
-    override fun magnitudeSquare() = x.pow(2) + y.pow(2) + z.pow(2)
-    override fun distance(other: Vec): Number {
-        val distX = x - other.x
-        val distY = y - other.y
-        val distZ = if (other is Vector3D) z - other.z else z
-
-        return sqrt(distX.pow(2) + distY.pow(2) + distZ.pow(2))
-    }
-
-    override fun toAbs(): Vector3D = super.toAbs().apply {
-        z = z.absoluteValue
-    } as Vector3D
+    override fun toAbs() = Vector3D(x.absoluteValue, y.absoluteValue, z.absoluteValue)
 }

@@ -181,10 +181,12 @@ operator fun Number.div(other: Number): Number = when (this) {
     }
     is Int -> {
         when (other) {
-            is Long -> div(other)
+            is Long, is Int -> {
+                val div = this.toDouble().div(other.toDouble())
+                if (div % 1 == 0.0) div.toInt() else div
+            }
             is Float -> div(other)
             is Double -> div(other)
-            is Int -> div(other)
             else -> throw IllegalArgumentException("${other::class} is not currently supported for division")
         }
     }
@@ -382,12 +384,23 @@ fun ceil(value: Number): Number = when (value) {
 }
 
 /**
- * Floor the [value].
+ * Square root the [value].
  */
 fun sqrt(value: Number): Number = when (value) {
     is Float -> kotlin.math.sqrt(value)
     is Double -> kotlin.math.sqrt(value)
     else -> throw IllegalArgumentException("Cannot get sqrt for type ${value::class}")
+}
+
+/**
+ * Max of [value1] and [value2].
+ */
+fun max(value1: Number, value2: Number): Number = when (value1) {
+    is Long -> kotlin.math.max(value1, value2.toLong())
+    is Int -> kotlin.math.max(value1, value2.toInt())
+    is Float -> kotlin.math.max(value1, value2.toFloat())
+    is Double -> kotlin.math.max(value1, value2.toDouble())
+    else -> throw IllegalArgumentException("Cannot get max for type ${value1::class}")
 }
 
 val Number.toRadians: Number get() = this * (1 / 180f) * Math.PI.toFloat()
