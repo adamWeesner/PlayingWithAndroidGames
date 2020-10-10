@@ -1,6 +1,6 @@
 package com.weesnerDevelopment.mrNom.objects
 
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 
 enum class StainType(val value: Int) {
     Type1(0),
@@ -14,6 +14,6 @@ enum class StainType(val value: Int) {
 }
 
 class Stain(
-    val position: Vector,
+    val position: Vector2D,
     val type: StainType
 )

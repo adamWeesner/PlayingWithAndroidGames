@@ -2,8 +2,8 @@ package com.weesnerDevelopment.mrNom.screens
 
 import com.weesnerDevelopment.gameEngine.game.Game
 import com.weesnerDevelopment.gameEngine.graphics.Graphics
-import com.weesnerDevelopment.gameEngine.util.Size
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Size
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 import com.weesnerDevelopment.mrNom.MrNomAssets
 import com.weesnerDevelopment.mrNom.Settings
 
@@ -32,19 +32,20 @@ class LoadingScreen(
             stain3 = "stain3".getPixmap(game)
             gameOverText = "gameover".getPixmap(game)
 
-            playText = mainMenu.slice(game, Vector.zero, generalSize)
-            highScoreText = mainMenu.slice(game, Vector(0, Units.small2), generalSize)
-            helpText = mainMenu.slice(game, Vector(0, Units.small2 + Units.small2), generalSize)
+            playText = mainMenu.slice(game, Vector2D(0, 0), generalSize)
+            highScoreText = mainMenu.slice(game, Vector2D(0, Units.small2), generalSize)
+            helpText = mainMenu.slice(game, Vector2D(0, Units.small2 + Units.small2), generalSize)
 
-            pause = buttons.slice(game, Vector(Units.small, Units.medium4), squareSize)
-            back = buttons.slice(game, Vector(Units.small, Units.small), squareSize)
-            forward = buttons.slice(game, Vector(0, Units.small), squareSize)
-            soundOn = buttons.slice(game, Vector.zero, squareSize)
-            soundOff = buttons.slice(game, Vector(0, Units.small), squareSize)
-            close = buttons.slice(game, Vector(0, Units.medium4), squareSize)
+            pause = buttons.slice(game, Vector2D(Units.small, Units.medium4), squareSize)
+            back = buttons.slice(game, Vector2D(Units.small, Units.small), squareSize)
+            forward = buttons.slice(game, Vector2D(0, Units.small), squareSize)
+            soundOn = buttons.slice(game, Vector2D(0, 0), squareSize)
+            soundOff = buttons.slice(game, Vector2D(0, Units.small), squareSize)
+            close = buttons.slice(game, Vector2D(0, Units.medium4), squareSize)
 
-            resume = pauseMenu.slice(game, Vector.zero, Size(Units.large8, Units.small2))
-            quit = pauseMenu.slice(game, Vector(0, Units.small7), Size(Units.large8, Units.small2))
+            resume = pauseMenu.slice(game, Vector2D(0, 0), Size(Units.large8, Units.small2))
+            quit =
+                pauseMenu.slice(game, Vector2D(0, Units.small7), Size(Units.large8, Units.small2))
 
             click = "click".getSound(game)
             eat = "eat".getSound(game)

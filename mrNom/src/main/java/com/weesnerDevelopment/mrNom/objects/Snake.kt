@@ -1,13 +1,13 @@
 package com.weesnerDevelopment.mrNom.objects
 
 import com.weesnerDevelopment.mrNom.Settings
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 import com.weesnerDevelopment.gameEngine.math.compareTo
 import com.weesnerDevelopment.gameEngine.math.minus
 import com.weesnerDevelopment.gameEngine.math.plus
 
 data class SnakePart(
-    var position: Vector
+    var position: Vector2D
 )
 
 enum class SnakeDir(val value: Int) {
@@ -19,9 +19,9 @@ enum class SnakeDir(val value: Int) {
 
 class Snake {
     val parts = arrayListOf(
-        SnakePart(Vector(5, 6)),
-        SnakePart(Vector(5, 7)),
-        SnakePart(Vector(5, 8)),
+        SnakePart(Vector2D(5, 6)),
+        SnakePart(Vector2D(5, 7)),
+        SnakePart(Vector2D(5, 8)),
     )
     val head get() = parts[0].position
     var direction: Int = SnakeDir.Up.value

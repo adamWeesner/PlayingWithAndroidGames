@@ -1,13 +1,13 @@
 package com.weesnerDevelopment.mrNom
 
 import com.weesnerDevelopment.gameEngine.file.FileIO
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
 import java.io.*
 
 object Settings {
     var soundEnabled: Boolean = true
     val highScoresCount = 5
-    val highScores = arrayListOf(100, 80, 50, 30, 10)
+    val highScores = ArrayList<Int>(highScoresCount)
 
     val gridSize = Size(10, 13)
 

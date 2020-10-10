@@ -2,7 +2,7 @@ package com.weesnerDevelopment.mrNom.screens
 
 import com.weesnerDevelopment.gameEngine.game.Game
 import com.weesnerDevelopment.gameEngine.game.Image
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 import com.weesnerDevelopment.gameEngine.math.plus
 import com.weesnerDevelopment.mrNom.MrNomAssets
 import com.weesnerDevelopment.mrNom.Settings
@@ -11,9 +11,9 @@ val Game.ScreenMainMenu: MrNomScreen
     get() {
         val soundButton = Image(
             MrNomAssets.buttons,
-            Vector(0, Units.large4),
+            Vector2D(0, Units.large4),
             squareSize,
-            if (Settings.soundEnabled) Vector.zero else Vector(Units.small, 0)
+            if (Settings.soundEnabled) Vector2D(0, 0) else Vector2D(Units.small, 0)
         )
         val playButton = Image(MrNomAssets.playText, generalPos)
         val highScoreButton =
@@ -27,14 +27,14 @@ val Game.ScreenMainMenu: MrNomScreen
             game = this,
             present = {
                 game.graphics.apply {
-                    drawPixmap(MrNomAssets.background, Vector.zero)
-                    drawPixmap(MrNomAssets.logo, Vector(Units.small3, Units.small4))
+                    drawPixmap(MrNomAssets.background, Vector2D(0, 0))
+                    drawPixmap(MrNomAssets.logo, Vector2D(Units.small3, Units.small4))
                     playButton.draw(this)
                     highScoreButton.draw(this)
                     helpButton.draw(this)
 
                     soundButton.offset =
-                        if (Settings.soundEnabled) Vector.zero else Vector(Units.small, 0)
+                        if (Settings.soundEnabled) Vector2D(0, 0) else Vector2D(Units.small, 0)
                     soundButton.draw(this)
                 }
             },

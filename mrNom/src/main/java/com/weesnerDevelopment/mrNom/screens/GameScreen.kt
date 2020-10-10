@@ -4,6 +4,13 @@ import android.graphics.Color
 import com.weesnerDevelopment.gameEngine.game.Game
 import com.weesnerDevelopment.gameEngine.game.Image
 import com.weesnerDevelopment.gameEngine.graphics.Pixmap
+import com.weesnerDevelopment.gameEngine.math.Vector2D
+import com.weesnerDevelopment.gameEngine.math.div
+import com.weesnerDevelopment.gameEngine.math.minus
+import com.weesnerDevelopment.gameEngine.math.plus
+import com.weesnerDevelopment.mrNom.MrNomAssets
+import com.weesnerDevelopment.mrNom.Settings
+import com.weesnerDevelopment.mrNom.objects.SnakeDir
 import com.weesnerDevelopment.mrNom.objects.StainType
 import com.weesnerDevelopment.mrNom.objects.World
 import com.weesnerDevelopment.mrNom.screens.Units.large1
@@ -18,13 +25,6 @@ import com.weesnerDevelopment.mrNom.screens.Units.small
 import com.weesnerDevelopment.mrNom.screens.Units.small1
 import com.weesnerDevelopment.mrNom.screens.Units.small2
 import com.weesnerDevelopment.mrNom.screens.Units.small7
-import com.weesnerDevelopment.gameEngine.math.Vector
-import com.weesnerDevelopment.gameEngine.math.div
-import com.weesnerDevelopment.gameEngine.math.minus
-import com.weesnerDevelopment.gameEngine.math.plus
-import com.weesnerDevelopment.mrNom.MrNomAssets
-import com.weesnerDevelopment.mrNom.Settings
-import com.weesnerDevelopment.mrNom.objects.SnakeDir
 
 enum class State {
     Ready,
@@ -35,17 +35,17 @@ enum class State {
 
 val Game.ScreenGame: MrNomScreen
     get() {
-        val gameOverMenuLoc = Vector(medium4, large1)
+        val gameOverMenuLoc = Vector2D(medium4, large1)
 
         var state = State.Ready
         val world = World()
         var oldScore: Number = 0
         var score = "0"
 
-        val pauseButton = Image(MrNomAssets.pause, Vector.zero)
+        val pauseButton = Image(MrNomAssets.pause, Vector2D(0, 0))
         val closeButton = Image(MrNomAssets.close, gameOverMenuLoc)
-        val resumeButton = Image(MrNomAssets.resume, Vector(medium, medium1))
-        val quitButton = Image(MrNomAssets.quit, Vector(medium5, medium2))
+        val resumeButton = Image(MrNomAssets.resume, Vector2D(medium, medium1))
+        val quitButton = Image(MrNomAssets.quit, Vector2D(medium5, medium2))
 
         fun drawWorld(world: World) {
             val scalar = Units.small3
@@ -54,12 +54,12 @@ val Game.ScreenGame: MrNomScreen
                 StainType.Type2 -> MrNomAssets.stain2
                 StainType.Type3 -> MrNomAssets.stain3
             }
-            graphics.drawPixmap(stainPixmap, Vector.times(world.stain.position, scalar))
+            graphics.drawPixmap(stainPixmap, world.stain.position * scalar)
 
             for (i in 1 until world.snake.parts.size) {
                 graphics.drawPixmap(
                     MrNomAssets.tail,
-                    Vector.times(world.snake.parts[i].position, scalar)
+                    world.snake.parts[i].position * scalar
                 )
             }
 
@@ -71,10 +71,10 @@ val Game.ScreenGame: MrNomScreen
                 else -> throw IllegalArgumentException("Somehow we have a bad snake direction...")
             }
 
-            val headScaled = Vector.times(world.snake.head, scalar)
+            val headScaled = world.snake.head * scalar
             graphics.drawPixmap(
                 headPixmap,
-                Vector(
+                Vector2D(
                     headScaled.x + Units.small6 - headPixmap.size.width / 2,
                     headScaled.y + Units.small6 - headPixmap.size.height / 2
                 )
@@ -85,35 +85,35 @@ val Game.ScreenGame: MrNomScreen
             game = this,
             present = {
                 graphics.apply {
-                    drawPixmap(MrNomAssets.background, Vector.zero)
+                    drawPixmap(MrNomAssets.background, Vector2D(0, 0))
                     drawWorld(world)
 
                     when (state) {
                         State.Ready -> {
-                            drawPixmap(MrNomAssets.readyText, Vector(small7, medium1))
-                            drawLine(Vector(0, large4), Vector(large7, large4), Color.BLACK)
+                            drawPixmap(MrNomAssets.readyText, Vector2D(small7, medium1))
+                            drawLine(Vector2D(0, large4), Vector2D(large7, large4), Color.BLACK)
                         }
                         State.Running -> {
                             pauseButton.draw(this)
-                            drawLine(Vector(0, large4), Vector(large7, large4), Color.BLACK)
+                            drawLine(Vector2D(0, large4), Vector2D(large7, large4), Color.BLACK)
                             backImage.draw(this)
                             forwardImage.draw(this)
                         }
                         State.Paused -> {
                             resumeButton.draw(this)
                             quitButton.draw(this)
-                            drawLine(Vector(0, large4), Vector(large7, large4), Color.BLACK)
+                            drawLine(Vector2D(0, large4), Vector2D(large7, large4), Color.BLACK)
                         }
                         State.GameOver -> {
-                            drawPixmap(MrNomAssets.gameOverText, Vector(small, medium1))
+                            drawPixmap(MrNomAssets.gameOverText, Vector2D(small, medium1))
                             closeButton.draw(this)
-                            drawLine(Vector(0, large4), Vector(large7, large4), Color.BLACK)
+                            drawLine(Vector2D(0, large4), Vector2D(large7, large4), Color.BLACK)
                         }
                     }
                     drawText(
                         this,
                         score,
-                        Vector(
+                        Vector2D(
                             game.graphics.size.width / 2 - score.length * small1 / 2,
                             game.graphics.size.height - small2
                         )

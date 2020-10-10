@@ -40,7 +40,7 @@ class World {
             fields[part.x.toInt()][part.y.toInt()] = true
         }
 
-        val stainPos = Vector(
+        val stainPos = Vector2D(
             random.nextInt(size.width.toInt()),
             random.nextInt(size.height.toInt())
         )

@@ -4,8 +4,8 @@ import com.weesnerDevelopment.gameEngine.audio.Sound
 import com.weesnerDevelopment.gameEngine.game.Game
 import com.weesnerDevelopment.gameEngine.graphics.Graphics
 import com.weesnerDevelopment.gameEngine.graphics.Pixmap
-import com.weesnerDevelopment.gameEngine.util.Size
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Size
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 
 object MrNomAssets {
     fun String.getPixmap(
@@ -17,7 +17,7 @@ object MrNomAssets {
 
     fun Pixmap.slice(
         game: Game,
-        position: Vector,
+        position: Vector2D,
         size: Size,
         format: Graphics.PixmapFormat = Graphics.PixmapFormat.ARGB8888
     ) =

@@ -5,8 +5,8 @@ import com.weesnerDevelopment.gameEngine.game.Image
 import com.weesnerDevelopment.gameEngine.game.Screen
 import com.weesnerDevelopment.gameEngine.graphics.Graphics
 import com.weesnerDevelopment.gameEngine.input.Input
-import com.weesnerDevelopment.gameEngine.util.Size
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Size
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 import com.weesnerDevelopment.gameEngine.math.plus
 import com.weesnerDevelopment.mrNom.MrNomAssets
 import com.weesnerDevelopment.mrNom.Settings
@@ -179,14 +179,14 @@ internal object Units {
 }
 
 /**
- * [Vector] of [Units.small], [Units.large2]
+ * [Vector2D] of [Units.small], [Units.large2]
  */
-internal val generalPos = Vector(Units.small, Units.large2)
+internal val generalPos = Vector2D(Units.small, Units.large2)
 
 /**
- * [Vector] of [Units.small], [Units.small]
+ * [Vector2D] of [Units.small], [Units.small]
  */
-internal val squarePos = Vector(Units.small, Units.small)
+internal val squarePos = Vector2D(Units.small, Units.small)
 
 /**
  * [Size] of [Units.large], [Units.small2]
@@ -198,8 +198,8 @@ internal val generalSize = Size(Units.large, Units.small2)
  */
 internal val squareSize = Size(Units.small, Units.small)
 
-internal val backButtonLoc = Vector(0, Units.large4)
-internal val forwardButtonLoc = Vector(Units.large3, Units.large4)
+internal val backButtonLoc = Vector2D(0, Units.large4)
+internal val forwardButtonLoc = Vector2D(Units.large3, Units.large4)
 
 abstract class MrNomScreen(
     open val game: Game
@@ -212,7 +212,7 @@ abstract class MrNomScreen(
             MrNomAssets.click.play(100)
     }
 
-    fun drawText(graphics: Graphics, line: String, position: Vector) {
+    fun drawText(graphics: Graphics, line: String, position: Vector2D) {
         for (i in line.indices) {
             val char = line[i]
 
@@ -234,7 +234,7 @@ abstract class MrNomScreen(
             graphics.drawPixmap(
                 MrNomAssets.numbers,
                 position,
-                Vector(srcX, 0),
+                Vector2D(srcX, 0),
                 Size(srcWidth, Units.small3)
             )
             position.x += srcWidth
