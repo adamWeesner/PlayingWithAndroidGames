@@ -18,14 +18,14 @@ import com.weesnerDevelopment.gameEngine.game.Game
 import com.weesnerDevelopment.gameEngine.game.Screen
 import com.weesnerDevelopment.gameEngine.graphics.Graphics
 import com.weesnerDevelopment.gameEngine.input.Input
-import com.weesnerDevelopment.gameEngine.math.Vector
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Vector2D
+import com.weesnerDevelopment.gameEngine.math.Size
 import java.util.*
 
 abstract class AndroidGame : Fragment(), Game {
     private lateinit var renderView: AndroidRenderView
 
-    private val defaultSize = Vector(320, 480)
+    private val defaultSize = Vector2D(320, 480)
     private val gameSizePortrait = Size(defaultSize.x, defaultSize.y)
     private val gameSizeLandscape = Size(defaultSize.y, defaultSize.x)
     private lateinit var frameBuffer: Bitmap

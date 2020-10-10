@@ -5,8 +5,8 @@ import android.view.MotionEvent.*
 import android.view.View
 import com.weesnerDevelopment.gameEngine.input.EventPoolBuilder
 import com.weesnerDevelopment.gameEngine.input.Input
-import com.weesnerDevelopment.gameEngine.util.Size
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Size
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 
 class MultiTouchHandler(
     view: View,
@@ -16,7 +16,7 @@ class MultiTouchHandler(
     private val touchEventBuilder = EventPoolBuilder(Input.TouchEvent())
 
     var isTouched: BooleanArray = BooleanArray(maxTouchPoints)
-    var touch = Array(maxTouchPoints) { Vector.zero }
+    var touch = Array(maxTouchPoints) { Vector2D(0, 0) }
     var id = IntArray(maxTouchPoints)
 
     init {
@@ -30,9 +30,9 @@ class MultiTouchHandler(
             isTouched[pointer.index]
     }
 
-    override fun getTouch(pointer: Int): Vector = synchronized(this) {
+    override fun getTouch(pointer: Int): Vector2D = synchronized(this) {
         return if (pointer.index > 0 || pointer.index >= maxTouchPoints)
-            Vector.zero
+            Vector2D(0, 0)
         else
             touch[pointer.index]
     }
@@ -71,7 +71,7 @@ class MultiTouchHandler(
             }
         }
 
-        if(v?.isClickable == true) v.performClick() else true
+        if (v?.isClickable == true) v.performClick() else true
     }
 
     private fun buildTouchEvent(
@@ -83,7 +83,7 @@ class MultiTouchHandler(
         val touchEvent = touchEventBuilder.pool.newObject().apply {
             type = action
             pointer = pointerId
-            position = Vector(event.x * scale.width.toFloat(), event.y * scale.height.toFloat())
+            position = Vector2D(event.x * scale.width.toFloat(), event.y * scale.height.toFloat())
         }
         touch[index] = touchEvent.position
         isTouched[index] = true

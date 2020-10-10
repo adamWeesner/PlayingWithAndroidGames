@@ -40,7 +40,11 @@ android {
 }
 
 dependencies {
+    implementation project(':randomGameEngine')
+    implementation project(':randoms')
+    implementation project(':natureOfCode')
     implementation project(':gameEngine')
+    implementation project(':androidGameEngine')
     implementation project(':mrNom')
     implementation project(':openGlGameEngine')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

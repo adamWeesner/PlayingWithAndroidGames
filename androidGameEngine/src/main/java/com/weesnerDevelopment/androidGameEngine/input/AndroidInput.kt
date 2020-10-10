@@ -2,10 +2,10 @@ package com.weesnerDevelopment.androidGameEngine.input
 
 import android.content.Context
 import android.view.View
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
 import com.weesnerDevelopment.androidGameEngine.input.touch.MultiTouchHandler
 import com.weesnerDevelopment.gameEngine.input.Input
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 import com.weesnerDevelopment.gameEngine.math.Vector3D
 
 class AndroidInput(
@@ -24,6 +24,6 @@ class AndroidInput(
     override fun getKeyEvents(): List<Input.KeyEvent> = keyHandler.getKeyEvents()
 
     override fun isTouchDown(pointer: Int): Boolean = touchHandler.isTouchDown(pointer)
-    override fun getTouch(pointer: Int): Vector = touchHandler.getTouch(pointer)
+    override fun getTouch(pointer: Int): Vector2D = touchHandler.getTouch(pointer)
     override fun getTouchEvents(): List<Input.TouchEvent> = touchHandler.getTouchEvents()
 }

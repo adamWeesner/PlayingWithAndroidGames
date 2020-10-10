@@ -3,7 +3,7 @@ package com.weesnerDevelopment.androidGameEngine.graphics
 import android.graphics.Bitmap
 import com.weesnerDevelopment.gameEngine.graphics.Graphics
 import com.weesnerDevelopment.gameEngine.graphics.Pixmap
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
 
 class AndroidPixmap(
     val bitmap: Bitmap,

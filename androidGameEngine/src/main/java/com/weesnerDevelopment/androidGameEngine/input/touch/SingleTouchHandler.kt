@@ -4,8 +4,8 @@ import android.view.MotionEvent
 import android.view.View
 import com.weesnerDevelopment.gameEngine.input.EventPoolBuilder
 import com.weesnerDevelopment.gameEngine.input.Input
-import com.weesnerDevelopment.gameEngine.util.Size
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Size
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 
 class SingleTouchHandler(
     view: View,
@@ -13,7 +13,7 @@ class SingleTouchHandler(
 ) : TouchHandler {
     private val touchEventBuilder = EventPoolBuilder(Input.TouchEvent())
     var isTouched: Boolean = false
-    lateinit var touch: Vector
+    lateinit var touch: Vector2D
 
     init {
         view.setOnTouchListener(this)
@@ -23,7 +23,7 @@ class SingleTouchHandler(
         if (pointer == 0) isTouched else false
     }
 
-    override fun getTouch(pointer: Int): Vector = synchronized(this) {
+    override fun getTouch(pointer: Int): Vector2D = synchronized(this) {
         touch
     }
 
@@ -49,7 +49,7 @@ class SingleTouchHandler(
             }
         }
 
-        touchEvent.position = Vector(
+        touchEvent.position = Vector2D(
             event.x * scale.width.toFloat(),
             event.y * scale.height.toFloat()
         )

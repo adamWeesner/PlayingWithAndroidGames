@@ -1,33 +1,32 @@
 package com.weesnerDevelopment.playingWithGames
 
-import android.content.Context
 import android.content.res.Resources
 import androidx.fragment.app.Fragment
 import com.weesnerDevelopment.mrNom.MrNomGame
+import com.weesnerDevelopment.natureOfCode.ballFollowTouch.BallFollowTouchFragment
+import com.weesnerDevelopment.natureOfCode.ballWithForces.BallWithForcesFragment
+import com.weesnerDevelopment.natureOfCode.bouncingBall.BouncingBallFragment
+import com.weesnerDevelopment.natureOfCode.perlinBackground.PerlinBackgroundFragment
+import com.weesnerDevelopment.natureOfCode.randomWalker.WalkerFragment
 import com.weesnerDevelopment.openGlGameEngine.samples.*
-import com.weesnerDevelopment.playingWithGames.natureOfCode.ballFollowTouch.BallFollowTouchFragment
-import com.weesnerDevelopment.playingWithGames.natureOfCode.ballWithForces.BallWithForcesFragment
-import com.weesnerDevelopment.playingWithGames.natureOfCode.bouncingBall.BouncingBallFragment
-import com.weesnerDevelopment.playingWithGames.natureOfCode.perlinBackground.PerlinBackgroundFragment
-import com.weesnerDevelopment.playingWithGames.natureOfCode.randomWalker.WalkerFragment
-import com.weesnerDevelopment.playingWithGames.random.bouncingBall.BallBounceFragment
-import com.weesnerDevelopment.playingWithGames.random.circlePhysics.CirclePhysicsFragment
-import com.weesnerDevelopment.playingWithGames.random.circlePhysics.collision.CircleCollisionPhysicsFragment
+import com.weesnerDevelopment.randoms.bouncingBall.BallBounceFragment
+import com.weesnerDevelopment.randoms.circlePhysics.CirclePhysicsFragment
+import com.weesnerDevelopment.randoms.circlePhysics.collision.CircleCollisionPhysicsFragment
 
 fun Context.fragments(resources: Resources, selection: Int): Fragment? {
     val fragments = resources.getStringArray(R.array.fragments)
 
     return when (fragments[selection]) {
         // random
-        getString(R.string.bouncing_balls) -> BallBounceFragment()
-        getString(R.string.gravity_circles) -> CirclePhysicsFragment()
-        getString(R.string.gravity_collision_circles) -> CircleCollisionPhysicsFragment()
+        resources.getString(R.string.bouncing_balls) -> BallBounceFragment()
+        resources.getString(R.string.gravity_circles) -> CirclePhysicsFragment()
+        resources.getString(R.string.gravity_collision_circles) -> CircleCollisionPhysicsFragment()
         // nature of code
-        getString(R.string.random_walker) -> WalkerFragment()
-        getString(R.string.perlin_background) -> PerlinBackgroundFragment()
-        getString(R.string.bouncing_ball) -> BouncingBallFragment()
-        getString(R.string.ball_follow_touch) -> BallFollowTouchFragment()
-        getString(R.string.ball_with_forces) -> BallWithForcesFragment()
+        resources.getString(R.string.random_walker) -> WalkerFragment()
+        resources.getString(R.string.perlin_background) -> PerlinBackgroundFragment()
+        resources.getString(R.string.bouncing_ball) -> BouncingBallFragment()
+        resources.getString(R.string.ball_follow_touch) -> BallFollowTouchFragment()
+        resources.getString(R.string.ball_with_forces) -> BallWithForcesFragment()
         // mr nom
         getString(R.string.mr_nom) -> MrNomGame()
         // open gl samples

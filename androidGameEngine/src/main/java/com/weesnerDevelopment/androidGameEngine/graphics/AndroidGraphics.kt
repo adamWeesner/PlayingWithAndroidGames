@@ -4,8 +4,8 @@ import android.content.res.AssetManager
 import android.graphics.*
 import com.weesnerDevelopment.gameEngine.graphics.Graphics
 import com.weesnerDevelopment.gameEngine.graphics.Pixmap
-import com.weesnerDevelopment.gameEngine.util.Size
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Size
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 import com.weesnerDevelopment.gameEngine.math.minus
 import com.weesnerDevelopment.gameEngine.math.plus
 import java.io.IOException
@@ -61,7 +61,7 @@ class AndroidGraphics(
 
     override fun slicePixmap(
         pixmap: Pixmap,
-        position: Vector,
+        position: Vector2D,
         size: Size,
         format: Graphics.PixmapFormat
     ): Pixmap {
@@ -94,12 +94,12 @@ class AndroidGraphics(
         canvas.drawRGB((color and 0Xff0000) shr 16, (color and 0xff00) shr 8, (color and 0xff))
     }
 
-    override fun drawPixel(position: Vector, color: Int) {
+    override fun drawPixel(position: Vector2D, color: Int) {
         paint.color = color
         canvas.drawPoint(position.x.toFloat(), position.y.toFloat(), paint)
     }
 
-    override fun drawLine(startPosition: Vector, endPosition: Vector, color: Int) {
+    override fun drawLine(startPosition: Vector2D, endPosition: Vector2D, color: Int) {
         paint.color = color
         canvas.drawLine(
             startPosition.x.toFloat(),
@@ -110,7 +110,7 @@ class AndroidGraphics(
         )
     }
 
-    override fun drawRect(position: Vector, size: Size, color: Int) {
+    override fun drawRect(position: Vector2D, size: Size, color: Int) {
         paint.apply {
             this.color = color
             style = Paint.Style.FILL
@@ -124,7 +124,7 @@ class AndroidGraphics(
         )
     }
 
-    override fun drawPixmap(pixmap: Pixmap, position: Vector, srcPosition: Vector, srcSize: Size) {
+    override fun drawPixmap(pixmap: Pixmap, position: Vector2D, srcPosition: Vector2D, srcSize: Size) {
         srcRect.apply {
             left = srcPosition.x.toInt()
             top = srcPosition.y.toInt()
@@ -146,7 +146,7 @@ class AndroidGraphics(
         )
     }
 
-    override fun drawPixmap(pixmap: Pixmap, position: Vector) {
+    override fun drawPixmap(pixmap: Pixmap, position: Vector2D) {
         canvas.drawBitmap(
             (pixmap as AndroidPixmap).bitmap,
             position.x.toFloat(),
