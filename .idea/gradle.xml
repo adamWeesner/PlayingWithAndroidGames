@@ -15,7 +15,10 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/gameEngine" />
             <option value="$PROJECT_DIR$/mrNom" />
+            <option value="$PROJECT_DIR$/natureOfCode" />
             <option value="$PROJECT_DIR$/openGlGameEngine" />
+            <option value="$PROJECT_DIR$/randomGameEngine" />
+            <option value="$PROJECT_DIR$/randoms" />
             <option value="$PROJECT_DIR$/superJumper" />
           </set>
         </option>
