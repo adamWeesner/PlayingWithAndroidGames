@@ -1,14 +1,14 @@
-package com.weesnerDevelopment.playingWithGames.random.circlePhysics
+package com.weesnerDevelopment.randoms.circlePhysics
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
-import com.weesnerDevelopment.playingWithGames.game.GameSurfaceView
-import com.weesnerDevelopment.playingWithGames.game.GameVariables
-import com.weesnerDevelopment.playingWithGames.objects.PathInfo
-import com.weesnerDevelopment.playingWithGames.objects.PhysicsBall
+import com.weesnerDevelopment.randomGameEngine.game.GameSurfaceView
+import com.weesnerDevelopment.randomGameEngine.game.GameVariables
+import com.weesnerDevelopment.randomGameEngine.objects.PathInfo
+import com.weesnerDevelopment.randomGameEngine.objects.PhysicsBall
 import kotlinx.coroutines.launch
 import kotlin.random.Random.Default.nextInt
 
@@ -31,7 +31,7 @@ class CirclePhysicsSurfaceView(context: Context) : GameSurfaceView(context) {
 
     override fun resume() {
         super.resume()
-        pathsData = (0 until GameVariables.pathColorCount.value.toInt()).map {
+        pathsData = (0 until GameVariables.pathColorCount.value!!.toInt()).map {
             PathInfo(Path(), Paint(Paint.ANTI_ALIAS_FLAG).apply { color = randomColor })
         }
     }

@@ -1,0 +1,5 @@
+<resources>
+    <string name="bouncing_balls">Bouncing Balls</string>
+    <string name="gravity_circles">Gravity Circles</string>
+    <string name="gravity_collision_circles">Gravity Collision Circles</string>
+</resources>
