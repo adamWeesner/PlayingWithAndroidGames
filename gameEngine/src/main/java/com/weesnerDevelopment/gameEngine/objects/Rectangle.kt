@@ -1,9 +1,9 @@
 package com.weesnerDevelopment.gameEngine.objects
 
-import com.weesnerDevelopment.gameEngine.math.Vector
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Vector2D
+import com.weesnerDevelopment.gameEngine.math.Size
 
 data class Rectangle(
-    var lowerLeft: Vector,
+    var lowerLeft: Vector2D,
     val size: Size
 ) : Transform(lowerLeft)

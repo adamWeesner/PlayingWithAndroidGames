@@ -1,15 +1,34 @@
 package com.weesnerDevelopment.gameEngine.objects
 
-import com.weesnerDevelopment.gameEngine.math.*
+import com.weesnerDevelopment.gameEngine.math.Vector2D
+import com.weesnerDevelopment.gameEngine.math.compareTo
+import com.weesnerDevelopment.gameEngine.math.plus
+import com.weesnerDevelopment.gameEngine.math.pow
 
 open class Transform(
-    open val position: Vector
+    open val position: Vector2D
 ) {
+    companion object {
+        fun Vector2D.inCircle(circle: Circle) =
+            circle.center.distanceSquared(this) < circle.radius.pow(2)
+
+        fun Vector2D.inRectangle(rectangle: Rectangle) = rectangle.lowerLeft.x <= x &&
+                rectangle.lowerLeft.x + rectangle.size.width >= x &&
+                rectangle.lowerLeft.y <= y &&
+                rectangle.lowerLeft.y + rectangle.size.height >= y
+
+        fun Vector2D.isIn(transform: Transform) = when (transform) {
+            is Circle -> this.inCircle(transform)
+            is Rectangle -> this.inRectangle(transform)
+            else -> throw IllegalArgumentException()
+        }
+    }
+
     open fun isOverlapping(other: Transform) = when (this) {
         is Circle -> {
             when (other) {
                 is Circle -> {
-                    val distance = center.distance(other.center)
+                    val distance = center.distanceSquared(other.center)
                     distance <= (radius + other.radius).pow(2)
                 }
                 is Rectangle -> overlapRectangle(other)
@@ -31,12 +50,4 @@ open class Transform(
         }
         else -> throw IllegalArgumentException()
     }
-
-    fun inCircle(circle: Circle) =
-        circle.center.distance(position) < circle.radius.pow(2)
-
-    fun inRectangle(rectangle: Rectangle) = rectangle.lowerLeft.x <= position.x &&
-            rectangle.lowerLeft.x + rectangle.size.width >= position.x &&
-            rectangle.lowerLeft.y <= position.y &&
-            rectangle.lowerLeft.y + rectangle.size.height >= position.y
 }

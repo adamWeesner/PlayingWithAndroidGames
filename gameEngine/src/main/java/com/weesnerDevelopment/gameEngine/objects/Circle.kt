@@ -3,7 +3,7 @@ package com.weesnerDevelopment.gameEngine.objects
 import com.weesnerDevelopment.gameEngine.math.*
 
 data class Circle(
-    val center: Vector,
+    val center: Vector2D,
     val radius: Number
 ) : Transform(center) {
     internal fun overlapRectangle(other: Rectangle): Boolean {
@@ -22,6 +22,6 @@ data class Circle(
             else -> closestY
         }
 
-        return center.distance(Vector(closestX, closestY)) < radius.pow(2)
+        return center.distanceSquared(Vector2D(closestX, closestY)) < radius.pow(2)
     }
 }
