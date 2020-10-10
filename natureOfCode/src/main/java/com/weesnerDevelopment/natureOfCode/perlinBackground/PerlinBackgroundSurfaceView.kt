@@ -1,4 +1,4 @@
-package com.weesnerDevelopment.playingWithGames.natureOfCode.perlinBackground
+package com.weesnerDevelopment.natureOfCode.perlinBackground
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -6,13 +6,13 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Rect
 import androidx.core.graphics.set
-import com.weesnerDevelopment.playingWithGames.game.GameSurfaceView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.weesnerDevelopment.gameEngine.math.Noise
 import com.weesnerDevelopment.gameEngine.math.map
 import com.weesnerDevelopment.gameEngine.math.plus
+import com.weesnerDevelopment.randomGameEngine.game.GameSurfaceView
 
 class PerlinBackgroundSurfaceView(context: Context) : GameSurfaceView(context) {
     private var bitmap: Bitmap? = null

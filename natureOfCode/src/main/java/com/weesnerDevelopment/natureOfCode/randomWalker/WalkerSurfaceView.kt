@@ -1,12 +1,12 @@
-package com.weesnerDevelopment.playingWithGames.natureOfCode.randomWalker
+package com.weesnerDevelopment.natureOfCode.randomWalker
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Path
-import com.weesnerDevelopment.gameEngine.math.Vector
-import com.weesnerDevelopment.playingWithGames.game.GameSurfaceView
-import com.weesnerDevelopment.playingWithGames.objects.Walker
+import com.weesnerDevelopment.gameEngine.math.Vector2D
+import com.weesnerDevelopment.randomGameEngine.game.GameSurfaceView
+import com.weesnerDevelopment.randomGameEngine.objects.Walker
 import kotlinx.coroutines.launch
 
 class WalkerSurfaceView(context: Context) : GameSurfaceView(context) {
@@ -16,7 +16,7 @@ class WalkerSurfaceView(context: Context) : GameSurfaceView(context) {
 
     override fun resume() {
         super.resume()
-        walker = Walker(Vector(measuredWidth.toFloat() / 2, measuredHeight.toFloat() / 2))
+        walker = Walker(Vector2D(measuredWidth.toFloat() / 2, measuredHeight.toFloat() / 2))
     }
 
     override fun onRender(canvas: Canvas) {
