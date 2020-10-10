@@ -14,6 +14,7 @@
         <item>@string/ball_with_forces</item>
         <item>-- Game Engine--</item>
         <item>@string/mr_nom</item>
+        <item>@string/super_jumper</item>
         <item>-- Open Gl Samples--</item>
         <item>@string/gl_game_sample</item>
         <item>@string/first_triangle_sample</item>

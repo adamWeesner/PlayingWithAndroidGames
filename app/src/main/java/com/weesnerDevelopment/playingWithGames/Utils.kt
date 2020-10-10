@@ -2,6 +2,7 @@ package com.weesnerDevelopment.playingWithGames
 
 import android.content.res.Resources
 import androidx.fragment.app.Fragment
+import com.weesnerDevelopent.superJumper.SuperJumper
 import com.weesnerDevelopment.mrNom.MrNomGame
 import com.weesnerDevelopment.natureOfCode.ballFollowTouch.BallFollowTouchFragment
 import com.weesnerDevelopment.natureOfCode.ballWithForces.BallWithForcesFragment
@@ -45,6 +46,7 @@ fun fragments(resources: Resources, selection: Int): Fragment? {
         resources.getString(R.string.cannon_texture_batch_sample) -> TextureAtlasBatchSample()
         resources.getString(R.string.animation_sample) -> CavemanSample()
         // super jumper
+        resources.getString(R.string.super_jumper) -> SuperJumper()
         else -> null
     }
 }
