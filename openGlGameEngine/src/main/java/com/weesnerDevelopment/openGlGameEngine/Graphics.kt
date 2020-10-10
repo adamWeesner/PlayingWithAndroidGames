@@ -2,7 +2,7 @@ package com.weesnerDevelopment.openGlGameEngine
 
 import android.opengl.GLSurfaceView
 import android.view.View
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
 import javax.microedition.khronos.opengles.GL10
 
 class GlGraphics(

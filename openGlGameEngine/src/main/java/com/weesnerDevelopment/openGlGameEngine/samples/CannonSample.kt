@@ -1,11 +1,7 @@
 package com.weesnerDevelopment.openGlGameEngine.samples
 
 import com.weesnerDevelopment.gameEngine.game.Screen
-import com.weesnerDevelopment.gameEngine.math.Vector
-import com.weesnerDevelopment.gameEngine.math.div
-import com.weesnerDevelopment.gameEngine.math.minus
-import com.weesnerDevelopment.gameEngine.math.times
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.*
 import com.weesnerDevelopment.openGlGameEngine.GlGame
 import com.weesnerDevelopment.openGlGameEngine.Vertices
 import javax.microedition.khronos.opengles.GL10.*
@@ -22,7 +18,7 @@ private class CannonScreen(
     val frustum = Size(4.48, 9.6)
     lateinit var vertices: Vertices
     val cannon = Cannon()
-    var touchPosition = Vector.zero
+    var touchPosition = Vector2D(0, 0)
 
     override fun resume() {
         game.glGraphics.apply {
@@ -59,7 +55,8 @@ private class CannonScreen(
             val touch = touchEvents[i].position
 
             touchPosition.x = (touch.x / game.glGraphics.size.width.toFloat()) * frustum.width
-            touchPosition.y = ((1 as Number) - touch.y / game.glGraphics.size.height.toFloat()) * frustum.height
+            touchPosition.y =
+                ((1 as Number) - touch.y / game.glGraphics.size.height.toFloat()) * frustum.height
 
             cannon.adjustAngle(touchPosition)
         }
@@ -82,11 +79,11 @@ private class CannonScreen(
 }
 
 private data class Cannon(
-    val position: Vector = Vector(2.4, .5)
+    val position: Vector2D = Vector2D(2.4, .5)
 ) {
     var angle: Number = 0
 
-    fun adjustAngle(touch: Vector) {
-        angle = (Vector.minus(touch, position)).angle()
+    fun adjustAngle(touch: Vector2D) {
+        angle = (touch - position).angle()
     }
 }

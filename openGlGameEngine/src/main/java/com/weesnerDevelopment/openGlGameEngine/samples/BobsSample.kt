@@ -1,10 +1,10 @@
 package com.weesnerDevelopment.openGlGameEngine.samples
 
 import com.weesnerDevelopment.gameEngine.game.Screen
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 import com.weesnerDevelopment.gameEngine.math.compareTo
 import com.weesnerDevelopment.gameEngine.math.times
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
 import com.weesnerDevelopment.openGlGameEngine.FpsCounter
 import com.weesnerDevelopment.openGlGameEngine.GlGame
 import com.weesnerDevelopment.openGlGameEngine.Texture
@@ -93,12 +93,12 @@ private class BobsScreen(
 
 class Bob {
     val maxSize = Size(320, 480)
-    val position: Vector =
-        Vector(Random.nextInt(maxSize.width.toInt()), Random.nextInt(maxSize.height.toInt()))
-    val direction: Vector = Vector(Random.nextInt(10,100))
+    val position: Vector2D =
+        Vector2D(Random.nextInt(maxSize.width.toInt()), Random.nextInt(maxSize.height.toInt()))
+    val direction: Vector2D = Vector2D(Random.nextInt(10,100), Random.nextInt(10,100))
 
     fun update(deltaTime: Float) {
-        position + Vector.times(direction, deltaTime)
+        position + direction * deltaTime
 
         if (position.x < 0) {
             position.x = 0

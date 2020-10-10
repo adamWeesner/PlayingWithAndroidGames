@@ -3,7 +3,6 @@ package com.weesnerDevelopment.openGlGameEngine.samples
 import com.weesnerDevelopment.gameEngine.game.Screen
 import com.weesnerDevelopment.gameEngine.input.Input
 import com.weesnerDevelopment.gameEngine.math.*
-import com.weesnerDevelopment.gameEngine.util.Size
 import com.weesnerDevelopment.openGlGameEngine.GlGame
 import com.weesnerDevelopment.openGlGameEngine.Vertices
 import javax.microedition.khronos.opengles.GL10.*
@@ -25,8 +24,8 @@ private class CannonGravityScreen(
     val cannon = GravityCannon()
     val ball = Ball()
 
-    val gravity = Vector(0, -10)
-    val touchPosition = Vector.zero
+    val gravity = Vector2D(0, -10)
+    val touchPosition = Vector2D(0, 0)
 
     override fun resume() {
         game.glGraphics.apply {
@@ -103,8 +102,8 @@ private class CannonGravityScreen(
         }
 
         ball.apply {
-            velocity + Vector.times(gravity, deltaTime)
-            position + Vector.times(velocity, deltaTime)
+            velocity += gravity * deltaTime
+            position += velocity * deltaTime
         }
     }
 
@@ -134,17 +133,17 @@ private class CannonGravityScreen(
 }
 
 private data class Ball(
-    var position: Vector = Vector.zero
+    var position: Vector2D = Vector2D(0, 0)
 ) {
-    val velocity = Vector.zero
+    var velocity = Vector2D(0, 0)
 }
 
 private data class GravityCannon(
-    val position: Vector = Vector(.5,.5)
+    val position: Vector2D = Vector2D(.5, .5)
 ) {
     var angle: Number = 0
 
-    fun adjustAngle(touch: Vector) {
-        angle = (Vector.minus(touch, position)).angle()
+    fun adjustAngle(touch: Vector2D) {
+        angle = (touch - position).angle()
     }
 }

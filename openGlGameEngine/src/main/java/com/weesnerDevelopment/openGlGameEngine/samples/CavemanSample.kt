@@ -1,11 +1,11 @@
 package com.weesnerDevelopment.openGlGameEngine.samples
 
 import com.weesnerDevelopment.gameEngine.game.Screen
-import com.weesnerDevelopment.gameEngine.math.Vector
+import com.weesnerDevelopment.gameEngine.math.Size
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 import com.weesnerDevelopment.gameEngine.math.compareTo
 import com.weesnerDevelopment.gameEngine.math.plus
 import com.weesnerDevelopment.gameEngine.objects.GameObject
-import com.weesnerDevelopment.gameEngine.util.Size
 import com.weesnerDevelopment.openGlGameEngine.*
 import javax.microedition.khronos.opengles.GL10
 import kotlin.random.Random
@@ -31,7 +31,7 @@ private class CavemanScreen(
     override fun resume() {
         cavemen.clear()
         for (i in 0 until numCavemen)
-            cavemen.add(Caveman(size = Size(1)))
+            cavemen.add(Caveman(size = Size(1, 1)))
 
         camera = Camera2D(game.glGraphics, frustum)
         batcher = SpriteBatcher(game.glGraphics, numCavemen)
@@ -39,10 +39,10 @@ private class CavemanScreen(
         texture = Texture(game, "walkanim.png")
         walkAnim = Animation(
             .2,
-            TextureRegion(texture, Vector(0, 0), Size(64)),
-            TextureRegion(texture, Vector(64, 0), Size(64)),
-            TextureRegion(texture, Vector(128, 0), Size(64)),
-            TextureRegion(texture, Vector(192, 0), Size(64))
+            TextureRegion(texture, Vector2D(0, 0), Size(64, 64)),
+            TextureRegion(texture, Vector2D(64, 0), Size(64, 64)),
+            TextureRegion(texture, Vector2D(128, 0), Size(64, 64)),
+            TextureRegion(texture, Vector2D(192, 0), Size(64, 64))
         )
     }
 
@@ -73,17 +73,17 @@ private class CavemanScreen(
 }
 
 private data class Caveman(
-    override var position: Vector = Vector(
+    override var position: Vector2D = Vector2D(
         Random.nextFloat() * world.width.toFloat(),
         Random.nextFloat() * world.height.toFloat(),
     ),
     override val size: Size
 ) : GameObject() {
     var walkingTime: Number = Random.nextFloat() * 10
-    val velocity = Vector(if (Random.nextFloat() > .5) -.5 else .5, 0)
+    val velocity = Vector2D(if (Random.nextFloat() > .5) -.5 else .5, 0)
 
-    fun update(deltaTime: Number) {
-        position + Vector.times(velocity, deltaTime)
+    override fun update(deltaTime: Number) {
+        position += velocity * deltaTime
         if (position.x < 0) position.x = world.width
         if (position.x > world.width) position.x = 0
         walkingTime += deltaTime

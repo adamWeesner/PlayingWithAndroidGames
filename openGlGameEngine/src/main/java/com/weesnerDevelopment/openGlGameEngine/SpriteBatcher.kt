@@ -1,7 +1,7 @@
 package com.weesnerDevelopment.openGlGameEngine
 
 import com.weesnerDevelopment.gameEngine.math.*
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
 import javax.microedition.khronos.opengles.GL10.GL_TRIANGLES
 
 class SpriteBatcher(glGraphics: GlGraphics, maxSprites: Int) {
@@ -38,10 +38,10 @@ class SpriteBatcher(glGraphics: GlGraphics, maxSprites: Int) {
         endBatch()
     }
 
-    fun draw(position: Vector, size: Size, region: TextureRegion) {
+    fun draw(position: Vector2D, size: Size, region: TextureRegion) {
         val halfSize = size.halfSize
-        val pos1 = Vector(position.x - halfSize.width, position.y - halfSize.height)
-        val pos2 = Vector(position.x + halfSize.width, position.y + halfSize.height)
+        val pos1 = Vector2D(position.x - halfSize.width, position.y - halfSize.height)
+        val pos2 = Vector2D(position.x + halfSize.width, position.y + halfSize.height)
 
         verticesBuffer[bufferIndex++] = pos1.x.toFloat()
         verticesBuffer[bufferIndex++] = pos1.y.toFloat()
@@ -63,33 +63,28 @@ class SpriteBatcher(glGraphics: GlGraphics, maxSprites: Int) {
         numSprites++
     }
 
-    fun draw(position: Vector, size: Size, angle: Number, region: TextureRegion) {
+    fun draw(position: Vector2D, size: Size, angle: Number, region: TextureRegion) {
         val halfSize = size.halfSize
         val rad = angle.toRadians
         val cos = cos(rad)
         val sin = sin(rad)
 
-        var pos1 = Vector(
+        val pos1 = Vector2D(
             -halfSize.width * cos - -halfSize.height * sin,
             -halfSize.width * sin + -halfSize.height * cos
-        )
-        var pos2 = Vector(
+        ) + position
+        val pos2 = Vector2D(
             halfSize.width * cos - -halfSize.height * sin,
             halfSize.width * sin + -halfSize.height * cos
-        )
-        var pos3 = Vector(
+        ) + position
+        val pos3 = Vector2D(
             halfSize.width * cos - halfSize.height * sin,
             halfSize.width * sin + halfSize.height * cos
-        )
-        var pos4 = Vector(
+        ) + position
+        val pos4 = Vector2D(
             -halfSize.width * cos - halfSize.height * sin,
             -halfSize.width * sin + halfSize.height * cos
-        )
-
-        pos1 = Vector.add(pos1, position)
-        pos2 = Vector.add(pos2, position)
-        pos3 = Vector.add(pos3, position)
-        pos4 = Vector.add(pos4, position)
+        ) + position
 
         verticesBuffer[bufferIndex++] = pos1.x.toFloat()
         verticesBuffer[bufferIndex++] = pos1.y.toFloat()

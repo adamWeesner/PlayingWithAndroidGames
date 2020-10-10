@@ -3,8 +3,8 @@ import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import com.weesnerDevelopment.gameEngine.game.Screen
 import com.weesnerDevelopment.gameEngine.math.UV
-import com.weesnerDevelopment.gameEngine.math.Vector
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
+import com.weesnerDevelopment.gameEngine.math.Vector2D
 import com.weesnerDevelopment.openGlGameEngine.GlGame
 import com.weesnerDevelopment.openGlGameEngine.Texture
 import com.weesnerDevelopment.openGlGameEngine.TextureRegion
@@ -30,14 +30,14 @@ class TestTextures {
     fun canLoadTextureSize() = runBlocking {
         delay(1)
         val texture = Texture(game, "atlas.png")
-        assert(texture.size == Size(64))
+        assert(texture.size == Size(64, 64))
     }
 
     @Test
     fun canLoadCannonRegionFromTexture() = runBlocking {
         delay(1)
         val texture = Texture(game, "atlas.png")
-        val textureRegion = TextureRegion(texture, Vector.zero, Size(64, 32))
+        val textureRegion = TextureRegion(texture, Vector2D(0,0), Size(64, 32))
 
         assertEquals(UV(0f, 0f), textureRegion.textureStart)
         assertEquals(UV(1f, .5f), textureRegion.textureEnd)
@@ -47,7 +47,7 @@ class TestTextures {
     fun canLoadBallRegionFromTexture() = runBlocking {
         delay(1)
         val texture = Texture(game, "atlas.png")
-        val textureRegion = TextureRegion(texture, Vector(0, 32), Size(16))
+        val textureRegion = TextureRegion(texture, Vector2D(0, 32), Size(16, 16))
 
         assertEquals(UV(0f, .5f), textureRegion.textureStart)
         assertEquals(UV(.25f, .75f), textureRegion.textureEnd)
@@ -57,9 +57,9 @@ class TestTextures {
     fun canLoadBobRegionFromTexture() = runBlocking {
         delay(1)
         val texture = Texture(game, "atlas.png")
-        val textureRegion = TextureRegion(texture, Vector(32), Size(32))
+        val textureRegion = TextureRegion(texture, Vector2D(32, 32), Size(32, 32))
 
-        assertEquals(Vector(32, 32), textureRegion.start)
+        assertEquals(Vector2D(32, 32), textureRegion.start)
         assertEquals(UV(.5f, .5f), textureRegion.textureStart)
         assertEquals(UV(1f, 1f), textureRegion.textureEnd)
     }

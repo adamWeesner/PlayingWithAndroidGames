@@ -7,7 +7,6 @@ import com.weesnerDevelopment.gameEngine.objects.DynamicGameObject
 import com.weesnerDevelopment.gameEngine.objects.GameObject
 import com.weesnerDevelopment.gameEngine.objects.SpatialHashGrid
 import com.weesnerDevelopment.gameEngine.objects.StaticGameObject
-import com.weesnerDevelopment.gameEngine.util.Size
 import com.weesnerDevelopment.openGlGameEngine.Camera2D
 import com.weesnerDevelopment.openGlGameEngine.GlGame
 import com.weesnerDevelopment.openGlGameEngine.Vertices
@@ -33,11 +32,11 @@ private class Camera2DScreen(
     lateinit var camera: Camera2D
 
     val targets = arrayListOf<StaticGameObject>()
-    val cannon = GravityCannon3(Vector.zero, Size(1))
-    val ball = DynamicGameObject(Vector.zero, Size(.2))
+    val cannon = GravityCannon3(Vector2D(0, 0), Size(1, 1))
+    val ball = DynamicGameObject(Vector2D(0, 0), Size(.2, .2))
 
-    val gravity = Vector(0, -10)
-    var touchPosition = Vector.zero
+    val gravity = Vector2D(0, -10)
+    var touchPosition = Vector2D(0, 0)
 
     override fun resume() {
         camera = Camera2D(game.glGraphics, frustum)
@@ -46,14 +45,13 @@ private class Camera2DScreen(
         for (i in 0 until 10)
             targets.add(
                 StaticGameObject(
-                    Vector(
+                    Vector2D(
                         Random.nextInt(frustum.width.toInt()),
                         Random.nextInt(frustum.height.toInt())
                     ),
-                    Size(.5)
+                    Size(.5, .5)
                 ).also {
                     grid.insertStaticObject(it)
-                    println("created target $it")
                 }
             )
 
@@ -140,18 +138,16 @@ private class Camera2DScreen(
                     position = cannon.position.copy()
                     velocity.x = cos(radians) * ballSpeed
                     velocity.y = sin(radians) * ballSpeed
-                    bounds.lowerLeft = Vector(ball.position.x - .1, ball.position.y - .1)
+                    bounds.lowerLeft = Vector2D(ball.position.x - .1, ball.position.y - .1)
                 }
             }
         }
 
         ball.apply {
-            velocity + Vector.times(gravity, deltaTime)
-            position + Vector.times(velocity, deltaTime)
-            bounds.lowerLeft + Vector.times(velocity, deltaTime)
+            velocity += gravity * deltaTime
+            position += velocity * deltaTime
+            bounds.lowerLeft += velocity * deltaTime
         }
-
-        println("ball is at ${ball.position}")
 
         val colliders = grid.getPotentialColliders(ball)
         for (collider in colliders) {
@@ -162,12 +158,10 @@ private class Camera2DScreen(
         }
 
         if (ball.position.y > 0) {
-            camera.position = Vector(ball.position.x, ball.position.y)
+            camera.position = Vector2D(ball.position.x, ball.position.y)
             camera.zoom = 1 + camera.position.y / frustum.height
-            //println("camera at ${camera.position} ${camera.zoom}")
         } else {
-            //println("should be showing normally")
-            camera.position = Vector(frustum.width / 2, frustum.height / 2)
+            camera.position = Vector2D(frustum.width / 2, frustum.height / 2)
             camera.zoom = 1
         }
     }
@@ -208,12 +202,12 @@ private class Camera2DScreen(
 }
 
 private data class GravityCannon3(
-    override val position: Vector,
+    override val position: Vector2D,
     override val size: Size
 ) : GameObject() {
     var angle: Number = 0
 
-    fun adjustAngle(touch: Vector) {
-        angle = (Vector.minus(touch, position)).angle()
+    fun adjustAngle(touch: Vector2D) {
+        angle = (touch - position).angle()
     }
 }

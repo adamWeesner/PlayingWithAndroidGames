@@ -7,7 +7,6 @@ import com.weesnerDevelopment.gameEngine.objects.DynamicGameObject
 import com.weesnerDevelopment.gameEngine.objects.GameObject
 import com.weesnerDevelopment.gameEngine.objects.SpatialHashGrid
 import com.weesnerDevelopment.gameEngine.objects.StaticGameObject
-import com.weesnerDevelopment.gameEngine.util.Size
 import com.weesnerDevelopment.openGlGameEngine.*
 import javax.microedition.khronos.opengles.GL10.*
 import kotlin.random.Random
@@ -20,22 +19,22 @@ class TextureAtlasBatchSample : GlGame() {
 private class TextureAtlasBatchScreen(
     private val game: GlGame
 ) : Screen(game) {
-    val gravity = Vector(0, -10)
-    var touchPosition = Vector.zero
+    val gravity = Vector2D(0, -10)
+    var touchPosition = Vector2D(0, 0)
     val frustum = Size(4.48, 9.6)
 
     val targets = arrayListOf<StaticGameObject>()
-    val cannon = GravityCannon5(Vector(2.2, .3), Size(1, .5))
-    val ball = DynamicGameObject(Vector.zero, Size(.2))
+    val cannon = GravityCannon5(Vector2D(2.2, .3), Size(1, .5))
+    val ball = DynamicGameObject(Vector2D(0, 0), Size(.2, .2))
 
     lateinit var grid: SpatialHashGrid
     lateinit var camera: Camera2D
     lateinit var texture: Texture
     lateinit var batcher: SpriteBatcher
 
-    val cannonRegion: TextureRegion by lazy { TextureRegion(texture, Vector(0f), Size(64, 32)) }
-    val ballRegion: TextureRegion by lazy { TextureRegion(texture, Vector(0f, 32), Size(16)) }
-    val bobRegion: TextureRegion by lazy { TextureRegion(texture, Vector(32), Size(32)) }
+    val cannonRegion: TextureRegion by lazy { TextureRegion(texture, Vector2D(0, 0), Size(64, 32)) }
+    val ballRegion: TextureRegion by lazy { TextureRegion(texture, Vector2D(0, 32), Size(16, 16)) }
+    val bobRegion: TextureRegion by lazy { TextureRegion(texture, Vector2D(32, 32), Size(32, 32)) }
 
     override fun resume() {
         grid = SpatialHashGrid(frustum, 2.5)
@@ -44,11 +43,11 @@ private class TextureAtlasBatchScreen(
         for (i in 0 until 20)
             targets.add(
                 StaticGameObject(
-                    Vector(
+                    Vector2D(
                         Random.nextFloat() * frustum.width,
                         Random.nextFloat() * frustum.height
                     ),
-                    Size(.5)
+                    Size(.5, .5)
                 ).also {
                     grid.insertStaticObject(it)
                 }
@@ -82,15 +81,15 @@ private class TextureAtlasBatchScreen(
                     position = cannon.position.copy()
                     velocity.x = cos(radians) * ballSpeed
                     velocity.y = sin(radians) * ballSpeed
-                    bounds.lowerLeft = Vector(ball.position.x - .1, ball.position.y - .1)
+                    bounds.lowerLeft = Vector2D(ball.position.x - .1, ball.position.y - .1)
                 }
             }
         }
 
         ball.apply {
-            velocity + Vector.times(gravity, deltaTime)
-            position + Vector.times(velocity, deltaTime)
-            bounds.lowerLeft + Vector.times(velocity, deltaTime)
+            velocity += gravity * deltaTime
+            position += velocity * deltaTime
+            bounds.lowerLeft += velocity * deltaTime
         }
 
         val colliders = grid.getPotentialColliders(ball)
@@ -102,10 +101,10 @@ private class TextureAtlasBatchScreen(
         }
 
         if (ball.position.y > 0) {
-            camera.position = Vector(ball.position.x, ball.position.y)
+            camera.position = Vector2D(ball.position.x, ball.position.y)
             camera.zoom = 1 + camera.position.y / frustum.height
         } else {
-            camera.position = Vector(frustum.width / 2, frustum.height / 2)
+            camera.position = Vector2D(frustum.width / 2, frustum.height / 2)
             camera.zoom = 1
         }
     }
@@ -122,21 +121,21 @@ private class TextureAtlasBatchScreen(
 
         batcher.batch(texture) {
             for (target in targets)
-                draw(target.position, Size(.5), bobRegion)
+                draw(target.position, Size(.5, .5), bobRegion)
 
-            draw(ball.position, Size(.2), ballRegion)
+            draw(ball.position, Size(.2, .2), ballRegion)
             draw(cannon.position, Size(1, .5), cannon.angle, cannonRegion)
         }
     }
 }
 
 private data class GravityCannon5(
-    override val position: Vector,
+    override val position: Vector2D,
     override val size: Size
 ) : GameObject() {
     var angle: Number = 0
 
-    fun adjustAngle(touch: Vector) {
-        angle = (Vector.minus(touch, position)).angle()
+    fun adjustAngle(touch: Vector2D) {
+        angle = (touch - position).angle()
     }
 }

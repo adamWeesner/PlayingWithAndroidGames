@@ -1,7 +1,7 @@
 package com.weesnerDevelopment.openGlGameEngine
 
 import com.weesnerDevelopment.gameEngine.math.*
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
 import javax.microedition.khronos.opengles.GL10.GL_MODELVIEW
 import javax.microedition.khronos.opengles.GL10.GL_PROJECTION
 
@@ -9,8 +9,8 @@ class Camera2D(
     private val glGraphics: GlGraphics,
     private val frustumSize: Size
 ) {
-    var position = Vector(frustumSize.width / 2f, frustumSize.height / 2f)
-    var zoom: Number = 1f
+    var position = frustumSize.toVector2D() / 2
+    var zoom: Number = 1
 
     fun setViewportAndMatrices() {
         glGraphics.gl.apply {
@@ -18,10 +18,10 @@ class Camera2D(
             glMatrixMode(GL_PROJECTION)
             glLoadIdentity()
             glOrthof(
-                (position.x - frustumSize.width * zoom / 2f).toFloat(),
-                (position.x + frustumSize.width * zoom / 2f).toFloat(),
-                (position.y - frustumSize.height * zoom / 2f).toFloat(),
-                (position.y + frustumSize.height * zoom / 2f).toFloat(),
+                (position.x - frustumSize.width * zoom / 2).toFloat(),
+                (position.x + frustumSize.width * zoom / 2).toFloat(),
+                (position.y - frustumSize.height * zoom / 2).toFloat(),
+                (position.y + frustumSize.height * zoom / 2).toFloat(),
                 1f,
                 -1f
             )
@@ -30,10 +30,12 @@ class Camera2D(
         }
     }
 
-    fun touchToWorld(touch: Vector) {
+    fun touchToWorld(touch: Vector2D) {
         touch.x = (touch.x / glGraphics.size.width) * frustumSize.width * zoom
         touch.y = (1 - touch.y / glGraphics.size.height) * frustumSize.height * zoom
 
-        touch + position - Vector(frustumSize.width * zoom / 2f, frustumSize.height * zoom / 2f)
+        val updatedPos = position - frustumSize.toVector2D() * zoom / 2
+        touch.x += updatedPos.x
+        touch.y += updatedPos.y
     }
 }

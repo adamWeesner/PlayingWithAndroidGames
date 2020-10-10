@@ -3,7 +3,7 @@ package com.weesnerDevelopment.openGlGameEngine
 import android.graphics.BitmapFactory
 import android.opengl.GLUtils
 import com.weesnerDevelopment.gameEngine.file.FileIO
-import com.weesnerDevelopment.gameEngine.util.Size
+import com.weesnerDevelopment.gameEngine.math.Size
 import java.io.IOException
 import java.io.InputStream
 import javax.microedition.khronos.opengles.GL10
